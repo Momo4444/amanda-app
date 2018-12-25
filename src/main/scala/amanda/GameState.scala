@@ -1,6 +1,7 @@
 package amanda
 
 import scala.io.StdIn
+import Common._
 
 case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9) {
 
@@ -14,6 +15,7 @@ case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9) {
 
   // TODO: ??? put Prompt methods into GameState, get rid of Prompt, turn PromptKey into a map, create cycle.
 
+  val message = prompts(promptKey)
   val meters = s"Amanda: ${amanda.meter}%,   Software instability: ${ra9.softwareInstability}%"
   val amandaMeter = s"Amanda: ${amanda.meter}%"
   val softwareInstability = s"Software instability: ${ra9.softwareInstability}%"
@@ -22,7 +24,7 @@ case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9) {
   val scrollScreen = "\n" * 40
 
   def print: Unit = {
-    val formattedMessage = Prompt.formatMessage(message, width)
+    val formattedMessage = GameState.formatMessage(message, width)
     println(
       s"""
          |${scrollScreen}
@@ -43,12 +45,12 @@ case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9) {
   }
 
   def nextPrompt(nextPromptKey: String): GameState = {
-    gameState.updatePromptKey(nextPromptKey)
+    updatePromptKey(nextPromptKey)
   }
 
 }
 
-object Prompt {
+object GameState {
 
   def formatMessage(message: String, width: Int): String = {
     val chars = message.toList
@@ -66,8 +68,5 @@ object Prompt {
     }
     indent(chars, 1).mkString("")
   }
-
-}
-
 
 }
