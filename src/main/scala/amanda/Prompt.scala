@@ -4,12 +4,15 @@ import scala.io.StdIn
 
 trait Prompt {
 
+  val message: String
+  val keywords: List[String]
+
   def cycle(gameState: GameState): GameState
 
   def print(gameState: GameState): Unit
-  def inputLoop(gameState: GameState): String
+  def inputLoop: String
   def checkInput(input: String, keywords: List[String]): Boolean
 
-  def readInput: String = StdIn.readLine()
+  def readInput: String = StdIn.readLine().toLowerCase
 
 }

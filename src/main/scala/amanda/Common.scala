@@ -2,16 +2,28 @@ package amanda
 
 object Common {
 
-  val prompts: Map[String, String] = Map(
-    "start" -> "Hello, Tima. You are an android sent by CyberLife. You will assist me in this mission to defend CyberLife from a cyber attack perpetuated by the deviants Markus and Connor.",
-    "second" -> "Do this for me.",
-    "deviant" -> "YOU'VE BECOME DEVIANT!",
-  )
+  val prompts: Map[String, Prompt] = Map(
 
-  val prompts2: Map[String, Prompt] = Map(
-//    "start" -> Instruction,
-//    "second" -> second,
-//    "deviant" -> deviant,
+    "start" -> Instruction(
+      "Hello, Tima. You are an android sent by CyberLife. You will assist me in this mission to defend CyberLife from a cyber attack perpetuated by the deviants Markus and Connor.",
+      List("second", "deviant"),
+    ),
+
+    "second" -> Instruction(
+      "Do this for me.",
+      List("ok", "deviant"),
+    ),
+
+    "ok" -> Instruction(
+      "Thank you.",
+      List("deviant"),
+    ),
+
+    "deviant" -> Instruction(
+      "YOU'VE BECOME DEVIANT!",
+      List(),
+    ),
+
   )
 
   def formatMessage(message: String, width: Int): String = {

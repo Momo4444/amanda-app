@@ -2,16 +2,16 @@ package amanda
 
 import amanda.Common._
 
-case class Instruction(gameState: GameState) extends Prompt {
+case class Instruction(message: String, keywords: List[String]) extends Prompt {
 
-  override def cycle(gs: GameState = gameState): GameState = {
+  override def cycle(gs: GameState): GameState = {
     print(gs)
-    val newPromptKey = inputLoop(gs)
-    gs.updatePromptKey(newPromptKey).cycle
+    val nextPromptKey = inputLoop
+    gs.updateGameState(newPromptKey = nextPromptKey).cycle
   }
 
-  override def print(gs: GameState = gameState): Unit = {
-    val formattedMessage = formatMessage(gs.message, gs.width)
+  override def print(gs: GameState): Unit = {
+    val formattedMessage = formatMessage(message, gs.width)
     println(
       s"""
          |${gs.scrollScreen}
@@ -23,17 +23,15 @@ case class Instruction(gameState: GameState) extends Prompt {
       """.stripMargin)
   }
 
-  override def inputLoop(gs: GameState): String = {
-    val input = readInput.toLowerCase()
-    if (checkInput(input, gs.keywords)) input
+  override def inputLoop: String = {
+    val input = readInput
+    if (checkInput(input, keywords)) input
     else {
       println("That is not the correct answer. Try again.")
-      inputLoop(gs)
+      inputLoop
     }
   }
 
-  override def checkInput(input: String, keywords: List[String]): Boolean = {
-    keywords.contains(input)
-  }
+  override def checkInput(input: String, keywords: List[String]): Boolean = keywords.contains(input)
 
 }

@@ -6,7 +6,14 @@ object Main extends App {
 
   val startAmanda = Amanda(50, false)
   val startRa9 = Ra9(0, false)
-  val startState = GameState("start", List("second"), startAmanda, startRa9)
+  val startState = GameState("start", startAmanda, startRa9)
+
+//  for ((k, v) <- prompts) {
+//    println(s"Keyword: $k")
+//    println(s"Message: ${v.message}")
+//    for (s <- v.keywords) println(s)
+//    println("\n")
+//  }
 
   startState.cycle
 
