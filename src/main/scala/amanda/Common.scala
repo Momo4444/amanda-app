@@ -50,7 +50,7 @@ object Common {
         "a" -> Choice("Blue", "bleu"),
         "b" -> Choice("Red", "rouge"),
         "c" -> Choice("Green", "vert"),
-        "d" -> Choice("Yello", "jaune"),
+        "d" -> Choice("Yellow", "jaune"),
       )
     ),
 

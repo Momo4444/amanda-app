@@ -14,16 +14,20 @@ case class Question(message: String, keywords: List[String], deltaGS: DeltaGameS
 
   override def print(gs: GameState): Unit = {
     val formattedMessage = formatMessage(message, gs.width)
+    var formattedResponses = ""
+    for ((k, v) <- responses) {
+      formattedResponses += s"\n${k}) ${v.description}"
+    }
     println(
       s"""
          |${gs.scrollScreen}
          |${gs.divider}
          |${formattedMessage}
          |${gs.divider}
-         |${responses}
+         |${formattedResponses}
          |${gs.divider}
        """.stripMargin
-    ) //TODO: FIX RESPONSES
+    )
   }
 
   override def inputLoop: String = {

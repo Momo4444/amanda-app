@@ -19,9 +19,7 @@ object Main extends App {
 
 }
 
-/* TODO:
-format question print
-add various meter logics in
+/* TODO: add various meter logics in
 
     a map from responses to keywords ???
  */
