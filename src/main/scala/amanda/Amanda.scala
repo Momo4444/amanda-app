@@ -2,14 +2,17 @@ package amanda
 
 case class Amanda(meter: Int, knowsDeviancy: Boolean) {
 
+  private val minValue = Config.amanda.minValue
+  private val maxValue = Config.amanda.maxValue
+
 //  def foundDeviancy(): Amanda = Amanda(0, true)
 
   def updateAmanda(deltaAmanda: DeltaAmanda): Amanda = this.updateMeter(deltaAmanda.deltaMeter).updateKnowsDeviancy(deltaAmanda.deltaKnowsDeviancy)
 
   private def updateMeter(n: Int): Amanda = {
     val newMeter = meter + n
-    if (newMeter > 100) Amanda(100, knowsDeviancy)
-    else if (newMeter < 0) Amanda(0, true)
+    if (newMeter > maxValue) Amanda(maxValue, knowsDeviancy)
+    else if (newMeter < minValue) Amanda(minValue, true)
     else Amanda(newMeter, knowsDeviancy)
   }
 

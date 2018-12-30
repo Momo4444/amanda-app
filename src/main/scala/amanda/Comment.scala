@@ -13,7 +13,7 @@ case class Comment(message: String, keywords: List[String], deltaGS: DeltaGameSt
   }
 
   override def print(gs: GameState): Unit = {
-    val formattedMessage = formatMessage(message, gs.width)
+    val formattedMessage = formatMessage(message, gs.printWidth)
     println(
       s"""
          |${gs.scrollScreen}

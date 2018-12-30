@@ -13,7 +13,7 @@ case class Question(message: String, keywords: List[String], deltaGS: DeltaGameS
   }
 
   override def print(gs: GameState): Unit = {
-    val formattedMessage = formatMessage(message, gs.width)
+    val formattedMessage = formatMessage(message, gs.printWidth)
     var formattedResponses = ""
     for ((k, v) <- responses) {
       formattedResponses += s"\n${k}) ${v.description}"

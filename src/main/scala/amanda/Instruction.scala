@@ -11,7 +11,7 @@ case class Instruction(message: String, keywords: List[String], deltaGS: DeltaGa
   }
 
   override def print(gs: GameState): Unit = {
-    val formattedMessage = formatMessage(message, gs.width)
+    val formattedMessage = formatMessage(message, gs.printWidth)
     println(
       s"""
          |${gs.scrollScreen}
