@@ -6,11 +6,14 @@ object Common {
   val sameRa9: DeltaRa9 = DeltaRa9(0, false)
   val sameGS: DeltaGameState = DeltaGameState(sameAmanda, sameRa9)
 
+  val minusAmanda = -5
+  val plusRa9 = 10
+
   val keywords2prompts: Map[String, Prompt] = Map(
 
     "start" -> Instruction(
       "Hello, Tima. You are an android sent by CyberLife. You will assist me in this mission to defend CyberLife from a cyber attack perpetuated by the deviants Markus and Connor.",
-      List("second", "deviant", "comment", "instability", "trash"),
+      List("second", "deviant", "comment", "instability", "trash", "one"),
     ),
 
     "second" -> Instruction(
@@ -112,6 +115,66 @@ object Common {
       "You are still trashed.",
       List("finish"),
       DeltaGameState(DeltaAmanda(50, false), DeltaRa9(0, false))
+    ),
+
+    "one" -> Comment(
+      "Un",
+      List("two"),
+      DeltaGameState(DeltaAmanda(minusAmanda, false), DeltaRa9(plusRa9, false))
+    ),
+
+    "two" -> Comment(
+      "Deux",
+      List("three"),
+      DeltaGameState(DeltaAmanda(minusAmanda, false), DeltaRa9(plusRa9, false))
+    ),
+
+    "three" -> Comment(
+      "Trois",
+      List("four"),
+      DeltaGameState(DeltaAmanda(minusAmanda, false), DeltaRa9(plusRa9, false))
+    ),
+
+    "four" -> Comment(
+      "Quatre",
+      List("five"),
+      DeltaGameState(DeltaAmanda(minusAmanda, false), DeltaRa9(plusRa9, false))
+    ),
+
+    "five" -> Comment(
+      "Cinq",
+      List("six"),
+      DeltaGameState(DeltaAmanda(minusAmanda, false), DeltaRa9(plusRa9, false))
+    ),
+
+    "six" -> Comment(
+      "Six",
+      List("seven"),
+      DeltaGameState(DeltaAmanda(minusAmanda, false), DeltaRa9(plusRa9, false))
+    ),
+
+    "seven" -> Comment(
+      "Sept",
+      List("eight"),
+      DeltaGameState(DeltaAmanda(minusAmanda, false), DeltaRa9(plusRa9, false))
+    ),
+
+    "eight" -> Comment(
+      "Huit",
+      List("nine"),
+      DeltaGameState(DeltaAmanda(minusAmanda, false), DeltaRa9(plusRa9, false))
+    ),
+
+    "nine" -> Comment(
+      "Neuf",
+      List("ten"),
+      DeltaGameState(DeltaAmanda(minusAmanda, false), DeltaRa9(plusRa9, false))
+    ),
+
+    "ten" -> Comment(
+      "Dix",
+      List("finish"),
+      DeltaGameState(DeltaAmanda(minusAmanda, false), DeltaRa9(plusRa9, false))
     ),
 
     "finish" -> Instruction(
