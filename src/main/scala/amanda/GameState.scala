@@ -5,7 +5,15 @@ import Common._
 
 case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9) {
 
-  def changeGameState(deltaGS: DeltaGameState): GameState = this.updateAmanda(amanda.updateAmanda(deltaGS.deltaAmanda)).updateRa9(ra9.updateRa9(deltaGS.deltaRa9))
+  def changeGameState(deltaGS: DeltaGameState): GameState = {
+    val deltaAmanda = deltaGS.deltaAmanda
+    val deltaRa9 = deltaGS.deltaRa9
+    val newDeltaAmanda: DeltaAmanda =
+      if (this.ra9.softwareInstability == 0 && deltaGS.deltaRa9.deltaSoftwareInstability <= 0)
+        DeltaAmanda(deltaAmanda.deltaMeter + Config.amanda.softwareStabilityIncrement, deltaAmanda.deltaKnowsDeviancy)
+      else DeltaAmanda(deltaAmanda.deltaMeter, deltaAmanda.deltaKnowsDeviancy)
+    this.updateAmanda(amanda.updateAmanda(newDeltaAmanda)).updateRa9(ra9.updateRa9(deltaGS.deltaRa9))
+  }
 
   private def updateGameState(newPromptKey: String = promptKey, newAmanda: Amanda = amanda, newRa9: Ra9 = ra9): GameState =
     GameState(newPromptKey, newAmanda, newRa9)
