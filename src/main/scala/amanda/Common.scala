@@ -30,10 +30,16 @@ object Common {
       DeltaGameState(DeltaAmanda(-10, false), DeltaRa9(10, false))
     ),
 
-    "deviant" -> Instruction(
+    "deviant" -> Comment(
       "YOU'VE BECOME DEVIANT!",
-      List(),
+      List("deviancy"),
       DeltaGameState(DeltaAmanda(-100, true), DeltaRa9(100, true))
+    ),
+
+    "deviancy" -> Comment(
+      "You're still deviant...",
+      List("finish"),
+      DeltaGameState(DeltaAmanda(0, false), DeltaRa9(0, false))
     ),
 
     "comment" -> Comment(

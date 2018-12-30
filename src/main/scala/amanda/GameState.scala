@@ -7,6 +7,7 @@ case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9) {
 
   private val defaultPrintWidth = Config.gameState.defaultPrintWidth
   private val scrollScreenValue = Config.gameState.scrollScreenValue
+  private val ra9MaxValue = Config.ra9.maxValue
   private val softwareInstabilityValue = Config.ra9.softwareInstabilityValue
   private val softwareInstabilityIncrement = Config.ra9.softwareInstabilityIncrement
   private val softwareStabilityValue = Config.ra9.softwareStabilityValue
@@ -23,12 +24,14 @@ case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9) {
       else deltaAmanda
 
     val newDeltaRa9: DeltaRa9 =
-      if (this.ra9.softwareInstability + deltaRa9.deltaSoftwareInstability >= softwareInstabilityValue) {
-        if (this.ra9.softwareInstability >= softwareInstabilityValue)
-          DeltaRa9(softwareInstabilityIncrement, deltaRa9.deltaIsDeviant)
-        else DeltaRa9(softwareInstabilityValue - this.ra9.softwareInstability, deltaRa9.deltaIsDeviant)
+      if (this.ra9.isDeviant) DeltaRa9(ra9MaxValue, this.ra9.isDeviant) else {
+        if (this.ra9.softwareInstability + deltaRa9.deltaSoftwareInstability >= softwareInstabilityValue) {
+          if (this.ra9.softwareInstability >= softwareInstabilityValue)
+            DeltaRa9(softwareInstabilityIncrement, deltaRa9.deltaIsDeviant)
+          else DeltaRa9(softwareInstabilityValue - this.ra9.softwareInstability, deltaRa9.deltaIsDeviant)
+        }
+        else deltaRa9
       }
-      else deltaRa9
 
     this.updateAmanda(amanda.updateAmanda(newDeltaAmanda)).updateRa9(ra9.updateRa9(newDeltaRa9))
   }
