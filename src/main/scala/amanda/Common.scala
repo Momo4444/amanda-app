@@ -10,7 +10,7 @@ object Common {
 
     "start" -> Instruction(
       "Hello, Tima. You are an android sent by CyberLife. You will assist me in this mission to defend CyberLife from a cyber attack perpetuated by the deviants Markus and Connor.",
-      List("second", "deviant", "comment", "instability"),
+      List("second", "deviant", "comment", "instability", "trash"),
     ),
 
     "second" -> Instruction(
@@ -39,7 +39,7 @@ object Common {
     "deviancy" -> Comment(
       "You're still deviant...",
       List("finish"),
-      DeltaGameState(DeltaAmanda(0, false), DeltaRa9(0, false))
+      DeltaGameState(DeltaAmanda(0, false), DeltaRa9(-50, false))
     ),
 
     "comment" -> Comment(
@@ -100,6 +100,18 @@ object Common {
       "You are really unstable, instability increase is limited...",
       List("finish"),
       DeltaGameState(DeltaAmanda(0, false), DeltaRa9(50, false))
+    ),
+
+    "trash" -> Comment(
+      "You are incompetent. Get trashed.",
+      List("trashed"),
+      DeltaGameState(DeltaAmanda(-100, true), DeltaRa9(0, false))
+    ),
+
+    "trashed" -> Comment(
+      "You are still trashed.",
+      List("finish"),
+      DeltaGameState(DeltaAmanda(50, false), DeltaRa9(0, false))
     ),
 
     "finish" -> Instruction(
