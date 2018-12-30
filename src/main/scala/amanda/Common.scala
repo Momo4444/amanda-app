@@ -6,17 +6,16 @@ object Common {
   val sameRa9: DeltaRa9 = DeltaRa9(0, false)
   val sameGS: DeltaGameState = DeltaGameState(sameAmanda, sameRa9)
 
-  val prompts: Map[String, Prompt] = Map(
+  val keywords2prompts: Map[String, Prompt] = Map(
 
     "start" -> Instruction(
       "Hello, Tima. You are an android sent by CyberLife. You will assist me in this mission to defend CyberLife from a cyber attack perpetuated by the deviants Markus and Connor.",
-      List("second", "deviant"),
+      List("second", "deviant", "comment"),
     ),
 
     "second" -> Instruction(
       "Do this for me.",
       List("ok", "no", "deviant"),
-      sameGS
     ),
 
     "ok" -> Instruction(
@@ -37,7 +36,56 @@ object Common {
       DeltaGameState(DeltaAmanda(-100, true), DeltaRa9(100, true))
     ),
 
+    "comment" -> Comment(
+      "Hmm, that was very astute of you.",
+      List("question"),
+      DeltaGameState(DeltaAmanda(20, false), DeltaRa9(0, false))
+    ),
+
+    "question" -> Question(
+      "What is my favourite colour?",
+      List(),
+      sameGS,
+      Map(
+        "a" -> Choice("Blue", "bleu"),
+        "b" -> Choice("Red", "rouge"),
+        "c" -> Choice("Green", "vert"),
+        "d" -> Choice("Yello", "jaune"),
+      )
+    ),
+
+    "bleu" -> Comment(
+      "Good choice.",
+      List("finish"),
+      DeltaGameState(DeltaAmanda(10, false), DeltaRa9(0, false))
+    ),
+
+    "rouge" -> Comment(
+      "The colour of blood. Meh.",
+      List("finish"),
+      DeltaGameState(DeltaAmanda(0, false), DeltaRa9(0, false))
+    ),
+
+    "vert" -> Comment(
+      "A pansy colour.",
+      List("finish"),
+      DeltaGameState(DeltaAmanda(-10, false), DeltaRa9(0, false))
+    ),
+
+    "jaune" -> Comment(
+      "How dare you suggest this.",
+      List("deviant"),
+      DeltaGameState(DeltaAmanda(-30, false), DeltaRa9(0, false))
+    ),
+
+    "finish" -> Instruction(
+      "Temporary end of program...",
+      List(),
+    )
+
   )
+
+//  val responses2keywords: Map[String, String]
 
   def formatMessage(message: String, width: Int): String = {
     val chars = message.toList

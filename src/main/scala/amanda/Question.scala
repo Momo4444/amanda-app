@@ -2,11 +2,13 @@ package amanda
 
 import amanda.Common._
 
-case class Instruction(message: String, keywords: List[String], deltaGS: DeltaGameState = sameGS) extends Prompt {
+case class Question(message: String, keywords: List[String], deltaGS: DeltaGameState = sameGS,
+                    responses: Map[String, Choice]) extends Prompt {
 
   override def cycle(gs: GameState): GameState = {
     print(gs)
-    val nextPromptKey = inputLoop
+    val response = inputLoop
+    val nextPromptKey = responses(response).promptKey
     gs.updatePromptKey(nextPromptKey).changeGameState(keywords2prompts(nextPromptKey).deltaGS).cycle
   }
 
@@ -18,16 +20,17 @@ case class Instruction(message: String, keywords: List[String], deltaGS: DeltaGa
          |${gs.divider}
          |${formattedMessage}
          |${gs.divider}
-         |${gs.meters}
+         |${responses}
          |${gs.divider}
-      """.stripMargin)
+       """.stripMargin
+    ) //TODO: FIX RESPONSES
   }
 
   override def inputLoop: String = {
     val input = readInput
-    if (checkInput(input, keywords)) input
+    if (checkInput(input, responses.keys.toList)) input
     else {
-      println("That is not the correct answer. Try again.")
+      println("That is not a valid answer, try again.")
       inputLoop
     }
   }

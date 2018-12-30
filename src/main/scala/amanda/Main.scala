@@ -19,7 +19,9 @@ object Main extends App {
 
 }
 
-/* TODO: Create question prompt
-    then example questions
-    then add various meter logics in
+/* TODO:
+format question print
+add various meter logics in
+
+    a map from responses to keywords ???
  */
