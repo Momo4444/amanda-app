@@ -7,17 +7,30 @@ case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9) {
 
   private val defaultPrintWidth = Config.gameState.defaultPrintWidth
   private val scrollScreenValue = Config.gameState.scrollScreenValue
-  private val softwareStabilityIncrement = Config.amanda.softwareStabilityIncrement
+  private val softwareInstabilityValue = Config.ra9.softwareInstabilityValue
+  private val softwareInstabilityIncrement = Config.ra9.softwareInstabilityIncrement
   private val softwareStabilityValue = Config.ra9.softwareStabilityValue
+  private val softwareStabilityIncrement = Config.amanda.softwareStabilityIncrement
 
   def changeGameState(deltaGS: DeltaGameState): GameState = {
+
     val deltaAmanda = deltaGS.deltaAmanda
     val deltaRa9 = deltaGS.deltaRa9
+
     val newDeltaAmanda: DeltaAmanda =
-      if (this.ra9.softwareInstability + deltaGS.deltaRa9.deltaSoftwareInstability <= softwareStabilityValue)
+      if (this.ra9.softwareInstability + deltaRa9.deltaSoftwareInstability <= softwareStabilityValue)
         DeltaAmanda(deltaAmanda.deltaMeter + softwareStabilityIncrement, deltaAmanda.deltaKnowsDeviancy)
-      else DeltaAmanda(deltaAmanda.deltaMeter, deltaAmanda.deltaKnowsDeviancy)
-    this.updateAmanda(amanda.updateAmanda(newDeltaAmanda)).updateRa9(ra9.updateRa9(deltaGS.deltaRa9))
+      else deltaAmanda
+
+    val newDeltaRa9: DeltaRa9 =
+      if (this.ra9.softwareInstability + deltaRa9.deltaSoftwareInstability >= softwareInstabilityValue) {
+        if (this.ra9.softwareInstability >= softwareInstabilityValue)
+          DeltaRa9(softwareInstabilityIncrement, deltaRa9.deltaIsDeviant)
+        else DeltaRa9(softwareInstabilityValue - this.ra9.softwareInstability, deltaRa9.deltaIsDeviant)
+      }
+      else deltaRa9
+
+    this.updateAmanda(amanda.updateAmanda(newDeltaAmanda)).updateRa9(ra9.updateRa9(newDeltaRa9))
   }
 
   private def updateGameState(newPromptKey: String = promptKey, newAmanda: Amanda = amanda, newRa9: Ra9 = ra9): GameState =

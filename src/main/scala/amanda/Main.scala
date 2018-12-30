@@ -24,6 +24,7 @@ object Main extends App {
 }
 
 /* TODO: add various meter logics in
+        add in protocols
 
     a map from responses to keywords ???
  */
