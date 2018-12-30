@@ -6,6 +6,7 @@ trait Prompt {
 
   val message: String
   val keywords: List[String]
+  val deltaGS: DeltaGameState
 
   def cycle(gameState: GameState): GameState
 

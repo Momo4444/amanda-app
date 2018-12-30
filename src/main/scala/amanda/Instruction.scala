@@ -2,12 +2,12 @@ package amanda
 
 import amanda.Common._
 
-case class Instruction(message: String, keywords: List[String]) extends Prompt {
+case class Instruction(message: String, keywords: List[String], deltaGS: DeltaGameState = sameGS) extends Prompt {
 
   override def cycle(gs: GameState): GameState = {
     print(gs)
     val nextPromptKey = inputLoop
-    gs.updateGameState(newPromptKey = nextPromptKey).cycle
+    gs.updatePromptKey(nextPromptKey).changeGameState(prompts(nextPromptKey).deltaGS).cycle
   }
 
   override def print(gs: GameState): Unit = {

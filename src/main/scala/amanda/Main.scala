@@ -18,3 +18,8 @@ object Main extends App {
   startState.cycle
 
 }
+
+/* TODO: Create question prompt
+    then example questions
+    then add various meter logics in
+ */

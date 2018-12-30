@@ -2,6 +2,10 @@ package amanda
 
 object Common {
 
+  val sameAmanda: DeltaAmanda = DeltaAmanda(0, false)
+  val sameRa9: DeltaRa9 = DeltaRa9(0, false)
+  val sameGS: DeltaGameState = DeltaGameState(sameAmanda, sameRa9)
+
   val prompts: Map[String, Prompt] = Map(
 
     "start" -> Instruction(
@@ -11,17 +15,26 @@ object Common {
 
     "second" -> Instruction(
       "Do this for me.",
-      List("ok", "deviant"),
+      List("ok", "no", "deviant"),
+      sameGS
     ),
 
     "ok" -> Instruction(
       "Thank you.",
       List("deviant"),
+      DeltaGameState(DeltaAmanda(10, false), DeltaRa9(0, false))
+    ),
+
+    "no" -> Instruction(
+      "How dare you.",
+      List("deviant"),
+      DeltaGameState(DeltaAmanda(-10, false), DeltaRa9(10, false))
     ),
 
     "deviant" -> Instruction(
       "YOU'VE BECOME DEVIANT!",
       List(),
+      DeltaGameState(DeltaAmanda(-100, true), DeltaRa9(100, true))
     ),
 
   )
