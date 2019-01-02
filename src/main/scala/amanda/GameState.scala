@@ -13,6 +13,7 @@ case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9) {
   private val softwareInstabilityIncrement = Config.ra9.softwareInstabilityIncrement
   private val softwareStabilityValue = Config.ra9.softwareStabilityValue
   private val softwareStabilityIncrement = Config.amanda.softwareStabilityIncrement
+  private val deviancyPrompt = Config.ra9.deviancyPrompt
 
   def changeGameState(deltaGS: DeltaGameState): GameState = {
 
@@ -53,6 +54,8 @@ case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9) {
   val scrollScreen = "\n" * scrollScreenValue
 
   def cycle: GameState = prompt.cycle(this)
+
+  def runDeviancyProtocol: GameState = keywords2prompts(deviancyPrompt).cycle(this)
 
 }
 

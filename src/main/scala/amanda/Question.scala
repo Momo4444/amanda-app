@@ -9,7 +9,9 @@ case class Question(message: String, keywords: List[String], deltaGS: DeltaGameS
     print(gs)
     val response = inputLoop
     val nextPromptKey = responses(response).promptKey
-    gs.updatePromptKey(nextPromptKey).changeGameState(keywords2prompts(nextPromptKey).deltaGS).cycle
+    val newGS = gs.updatePromptKey(nextPromptKey).changeGameState(keywords2prompts(nextPromptKey).deltaGS)
+    val deviancyProtocolGS = if (deltaGS.deltaRa9.deltaIsDeviant) newGS.runDeviancyProtocol else newGS
+    deviancyProtocolGS.cycle
   }
 
   override def print(gs: GameState): Unit = {

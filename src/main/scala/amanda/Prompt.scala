@@ -14,6 +14,8 @@ trait Prompt {
   def inputLoop: String
 
   def readInput: String = StdIn.readLine().toLowerCase
-  def checkInput(input: String, keywords: List[String]): Boolean = keywords.contains(input)
+  def checkInput(input: String, keywords: List[String]): Boolean = {
+    keywords.contains(input)
+  }
 
 }

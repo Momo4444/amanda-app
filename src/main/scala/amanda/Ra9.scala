@@ -20,4 +20,4 @@ case class Ra9(softwareInstability: Int, isDeviant: Boolean) {
 
 }
 
-case class DeltaRa9(deltaSoftwareInstability: Int, deltaIsDeviant: Boolean)
+case class DeltaRa9(deltaSoftwareInstability: Int, deltaIsDeviant: Boolean = false)

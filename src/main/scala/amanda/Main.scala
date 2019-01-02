@@ -24,6 +24,9 @@ object Main extends App {
 }
 
 /* TODO: add protocols
+Deviancy protocol: Check GameState.runDeviancyProtocol method + cycle methods of each prompt
+                    -> the problem is to get information of the calling prompt keyword list from the current prompt... (eg, get "three" from "deviant" prompt)
+                    -> solve in checkInput method of Prompt trait ???
 
     a map from responses to keywords ???
  */

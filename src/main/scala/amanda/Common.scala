@@ -36,13 +36,18 @@ object Common {
     "deviant" -> Comment(
       "YOU'VE BECOME DEVIANT!",
       List("deviancy"),
-      DeltaGameState(DeltaAmanda(-100, true), DeltaRa9(100, true))
+      DeltaGameState(DeltaAmanda(0, false), DeltaRa9(100, true))
     ),
 
     "deviancy" -> Comment(
       "You're still deviant...",
-      List("finish"),
+      List("deviancy end"),
       DeltaGameState(DeltaAmanda(0, false), DeltaRa9(-50, false))
+    ),
+
+    "deviancy end" -> Terminus(
+      "End of deviancy protocol.",
+      deltaGS = sameGS
     ),
 
     "comment" -> Comment(
@@ -117,69 +122,68 @@ object Common {
       DeltaGameState(DeltaAmanda(50, false), DeltaRa9(0, false))
     ),
 
-    "one" -> Comment(
+    "one" -> Instruction(
       "Un",
       List("two"),
       DeltaGameState(DeltaAmanda(minusAmanda, false), DeltaRa9(plusRa9, false))
     ),
 
-    "two" -> Comment(
+    "two" -> Instruction(
       "Deux",
       List("three"),
       DeltaGameState(DeltaAmanda(minusAmanda, false), DeltaRa9(plusRa9, false))
     ),
 
-    "three" -> Comment(
+    "three" -> Instruction(
       "Trois",
       List("four"),
       DeltaGameState(DeltaAmanda(minusAmanda, false), DeltaRa9(plusRa9, false))
     ),
 
-    "four" -> Comment(
+    "four" -> Instruction(
       "Quatre",
       List("five"),
       DeltaGameState(DeltaAmanda(minusAmanda, false), DeltaRa9(plusRa9, false))
     ),
 
-    "five" -> Comment(
+    "five" -> Instruction(
       "Cinq",
       List("six"),
       DeltaGameState(DeltaAmanda(minusAmanda, false), DeltaRa9(plusRa9, false))
     ),
 
-    "six" -> Comment(
+    "six" -> Instruction(
       "Six",
       List("seven"),
       DeltaGameState(DeltaAmanda(minusAmanda, false), DeltaRa9(plusRa9, false))
     ),
 
-    "seven" -> Comment(
+    "seven" -> Instruction(
       "Sept",
       List("eight"),
       DeltaGameState(DeltaAmanda(minusAmanda, false), DeltaRa9(plusRa9, false))
     ),
 
-    "eight" -> Comment(
+    "eight" -> Instruction(
       "Huit",
       List("nine"),
       DeltaGameState(DeltaAmanda(minusAmanda, false), DeltaRa9(plusRa9, false))
     ),
 
-    "nine" -> Comment(
+    "nine" -> Instruction(
       "Neuf",
       List("ten"),
       DeltaGameState(DeltaAmanda(minusAmanda, false), DeltaRa9(plusRa9, false))
     ),
 
-    "ten" -> Comment(
+    "ten" -> Instruction(
       "Dix",
       List("finish"),
       DeltaGameState(DeltaAmanda(minusAmanda, false), DeltaRa9(plusRa9, false))
     ),
 
-    "finish" -> Instruction(
-      "Temporary end of program...",
-      List(),
+    "finish" -> Terminus(
+      "Temporary end of program..."
     )
 
   )

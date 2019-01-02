@@ -7,7 +7,9 @@ case class Instruction(message: String, keywords: List[String], deltaGS: DeltaGa
   override def cycle(gs: GameState): GameState = {
     print(gs)
     val nextPromptKey = inputLoop
-    gs.updatePromptKey(nextPromptKey).changeGameState(keywords2prompts(nextPromptKey).deltaGS).cycle
+    val newGS = gs.updatePromptKey(nextPromptKey).changeGameState(keywords2prompts(nextPromptKey).deltaGS)
+    val deviancyProtocolGS = if (deltaGS.deltaRa9.deltaIsDeviant) newGS.runDeviancyProtocol else newGS
+    deviancyProtocolGS.cycle
   }
 
   override def print(gs: GameState): Unit = {
@@ -25,7 +27,7 @@ case class Instruction(message: String, keywords: List[String], deltaGS: DeltaGa
 
   override def inputLoop: String = {
     val input = readInput
-    if (checkInput(input, keywords)) input
+    if (checkInput(input, "deviant" :: keywords)) input
     else {
       println("That is not the correct answer. Try again.")
       inputLoop

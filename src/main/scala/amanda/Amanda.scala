@@ -20,4 +20,4 @@ case class Amanda(meter: Int, knowsDeviancy: Boolean) {
 
 }
 
-case class DeltaAmanda(deltaMeter: Int, deltaKnowsDeviancy: Boolean)
+case class DeltaAmanda(deltaMeter: Int, deltaKnowsDeviancy: Boolean = false)
