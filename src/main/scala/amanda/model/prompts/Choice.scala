@@ -1,5 +1,3 @@
-package amanda
-
-import amanda.Common._
+package amanda.model.prompts
 
 case class Choice(description: String, promptKey: String)

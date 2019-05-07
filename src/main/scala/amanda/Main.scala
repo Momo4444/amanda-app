@@ -1,6 +1,7 @@
 package amanda
 
 import Common._
+import amanda.model.{Amanda, Ra9}
 
 object Main extends App {
 

@@ -2,6 +2,8 @@ package amanda
 
 import scala.io.StdIn
 import Common._
+import amanda.model.prompts.Prompt
+import amanda.model.{Amanda, DeltaAmanda, DeltaRa9, Ra9}
 
 case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9) {
 

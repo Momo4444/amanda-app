@@ -1,5 +1,8 @@
 package amanda
 
+import amanda.model.prompts._
+import amanda.model.{DeltaAmanda, DeltaRa9}
+
 object Common {
 
   val sameAmanda: DeltaAmanda = DeltaAmanda(0, false)

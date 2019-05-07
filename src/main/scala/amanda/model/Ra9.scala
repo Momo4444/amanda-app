@@ -1,4 +1,6 @@
-package amanda
+package amanda.model
+
+import amanda.Config
 
 case class Ra9(softwareInstability: Int, isDeviant: Boolean) {
 

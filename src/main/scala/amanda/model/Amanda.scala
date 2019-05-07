@@ -1,4 +1,6 @@
-package amanda
+package amanda.model
+
+import amanda.Config
 
 case class Amanda(meter: Int, knowsDeviancy: Boolean) {
 

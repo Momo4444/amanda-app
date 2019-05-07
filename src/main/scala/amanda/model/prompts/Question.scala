@@ -1,24 +1,15 @@
-package amanda
+package amanda.model.prompts
 
 import amanda.Common._
-import scala.io.StdIn
+import amanda.{DeltaGameState, GameState}
 
-case class Comment(message: String, keywords: List[String], deltaGS: DeltaGameState) extends Prompt {
-
-  def cycle2(gs: GameState): GameState = {
-    print(gs)
-    inputLoop
-    val nextPromptKey = keywords.head
-    val newGS = gs.updatePromptKey(nextPromptKey).changeGameState(keywords2prompts(nextPromptKey).deltaGS)
-    val deviancyProtocolGS = if (deltaGS.deltaRa9.deltaIsDeviant) newGS.runDeviancyProtocol else newGS
-    deviancyProtocolGS.cycle
-  }
+case class Question(message: String, keywords: List[String], deltaGS: DeltaGameState = sameGS,
+                    responses: Map[String, Choice]) extends Prompt {
 
   override def cycle(gs: GameState): GameState = {
     print(gs)
-    inputLoop
-    val nextPromptKey = keywords.head
-    val newGS = gs.updatePromptKey(nextPromptKey).changeGameState(keywords2prompts(nextPromptKey).deltaGS)
+    val response = inputLoop
+    val nextPromptKey = responses(response).promptKey
     val newGS = gs.updatePromptKey(nextPromptKey).changeGameState(keywords2prompts(nextPromptKey).deltaGS)
     val deviancyProtocolGS = if (deltaGS.deltaRa9.deltaIsDeviant) newGS.runDeviancyProtocol else newGS
     deviancyProtocolGS.cycle
@@ -26,13 +17,17 @@ case class Comment(message: String, keywords: List[String], deltaGS: DeltaGameSt
 
   override def print(gs: GameState): Unit = {
     val formattedMessage = formatMessage(message, gs.printWidth)
+    var formattedResponses = ""
+    for ((k, v) <- responses) {
+      formattedResponses += s"\n${k}) ${v.description}"
+    }
     println(
       s"""
          |${gs.scrollScreen}
          |${gs.divider}
          |${formattedMessage}
          |${gs.divider}
-         |${gs.meters}
+         |${formattedResponses}
          |${gs.divider}
        """.stripMargin
     )
@@ -40,7 +35,11 @@ case class Comment(message: String, keywords: List[String], deltaGS: DeltaGameSt
 
   override def inputLoop: String = {
     val input = readInput
-    input
+    if (checkInput(input, responses.keys.toList)) input
+    else {
+      println("That is not a valid answer, try again.")
+      inputLoop
+    }
   }
 
 }

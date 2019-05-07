@@ -1,12 +1,23 @@
-package amanda
+package amanda.model.prompts
 
 import amanda.Common._
+import amanda.{DeltaGameState, GameState}
 
-case class Instruction(message: String, keywords: List[String], deltaGS: DeltaGameState = sameGS) extends Prompt {
+case class Comment(message: String, keywords: List[String], deltaGS: DeltaGameState) extends Prompt {
+
+  def cycle2(gs: GameState): GameState = {
+    print(gs)
+    inputLoop
+    val nextPromptKey = keywords.head
+    val newGS = gs.updatePromptKey(nextPromptKey).changeGameState(keywords2prompts(nextPromptKey).deltaGS)
+    val deviancyProtocolGS = if (deltaGS.deltaRa9.deltaIsDeviant) newGS.runDeviancyProtocol else newGS
+    deviancyProtocolGS.cycle
+  }
 
   override def cycle(gs: GameState): GameState = {
     print(gs)
-    val nextPromptKey = inputLoop
+    inputLoop
+    val nextPromptKey = keywords.head
     val newGS = gs.updatePromptKey(nextPromptKey).changeGameState(keywords2prompts(nextPromptKey).deltaGS)
     val deviancyProtocolGS = if (deltaGS.deltaRa9.deltaIsDeviant) newGS.runDeviancyProtocol else newGS
     deviancyProtocolGS.cycle
@@ -22,16 +33,13 @@ case class Instruction(message: String, keywords: List[String], deltaGS: DeltaGa
          |${gs.divider}
          |${gs.meters}
          |${gs.divider}
-      """.stripMargin)
+       """.stripMargin
+    )
   }
 
   override def inputLoop: String = {
     val input = readInput
-    if (checkInput(input, "deviant" :: keywords)) input
-    else {
-      println("That is not the correct answer. Try again.")
-      inputLoop
-    }
+    input
   }
 
 }
