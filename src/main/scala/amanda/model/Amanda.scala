@@ -11,6 +11,10 @@ case class Amanda(meter: Int, knowsDeviancy: Boolean) {
 
   def updateAmanda(deltaAmanda: DeltaAmanda): Amanda = this.updateMeter(deltaAmanda.deltaMeter).updateKnowsDeviancy(deltaAmanda.deltaKnowsDeviancy)
 
+  def updateAmanda(deltaMeter: Int): Amanda = updateAmanda(DeltaAmanda(deltaMeter))
+  def updateAmanda(deltaKnowsDeviancy: Boolean): Amanda = updateAmanda(DeltaAmanda(0, deltaKnowsDeviancy))
+  def updateAmanda(deltaMeter: Int, deltaKnowsDeviancy: Boolean): Amanda = updateAmanda(DeltaAmanda(deltaMeter, deltaKnowsDeviancy))
+
   private def updateMeter(n: Int): Amanda = {
     val newMeter = meter + n
     if (newMeter > maxValue) Amanda(maxValue, knowsDeviancy)

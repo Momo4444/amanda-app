@@ -8,13 +8,30 @@ class AmandaSpec extends Specification {
   private val minValue = Config.amanda.minValue
   private val maxValue = Config.amanda.maxValue
 
+  private val neutralAmanda = Amanda(50, false)
+  private val evilAmanda = Amanda(50, true)
+
   "Amanda" should {
 
-    "something" in {
+    "update meter correctly" in {
+      neutralAmanda.updateAmanda(28) must be equalTo Amanda(78, false)
+      neutralAmanda.updateAmanda(-18) must be equalTo Amanda(32, false)
+      neutralAmanda.updateAmanda(0) must be equalTo Amanda(50, false)
+    }
 
-      minValue must be equalTo 0
-      maxValue must be equalTo 100
+    "not update meter above max value" in {
+      neutralAmanda.updateAmanda(60) must be equalTo Amanda(100, false)
+    }
 
+    "not update meter below min value but turn evil" in {
+      neutralAmanda.updateAmanda(-60) must be equalTo Amanda(0, true)
+    }
+
+    "update knowsDeviancy correctly" in {
+      neutralAmanda.updateAmanda(false) must be equalTo Amanda(50, false)
+      neutralAmanda.updateAmanda(true) must be equalTo Amanda(50, true)
+      evilAmanda.updateAmanda(true) must be equalTo Amanda(50, true)
+      evilAmanda.updateAmanda(false) must be equalTo Amanda(50, true)
     }
 
   }
