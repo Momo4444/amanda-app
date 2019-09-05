@@ -16,7 +16,40 @@ object Common {
 
     "start" -> Instruction(
       "Hello, Tima. You are an android sent by CyberLife. You will assist me in this mission to defend CyberLife from a cyber attack perpetuated by the deviants Markus and Connor.",
-      List("second", "deviant", "comment", "instability", "trash", "one"),
+      List("minitest", "second", "deviant", "comment", "instability", "trash", "one"),
+    ),
+
+    "minitest" -> Instruction(
+      "What is dad obssessed with?",
+      List("clocks")
+    ),
+
+    "clocks" -> Comment(
+      "Well done.",
+      List("questiontime"),
+      DeltaGameState(DeltaAmanda(30, false), DeltaRa9(0, false))
+    ),
+
+    "questiontime" -> Question(
+      "Est-ce que tu parles le francais?",
+      List(),
+      sameGS,
+      Map(
+        "y" -> Choice("Oui", "Ouais"),
+        "n" -> Choice("Non", "Jamais")
+      )
+    ),
+
+    "Ouais" -> Terminus(
+      "Tres bien.",
+      List(),
+      DeltaGameState(DeltaAmanda(20, false), DeltaRa9(20, false))
+    ),
+
+    "Jamais" -> Terminus(
+      "Decevu.",
+      List(),
+      DeltaGameState(DeltaAmanda(-50, false), DeltaRa9(50, false))
     ),
 
     "second" -> Instruction(
