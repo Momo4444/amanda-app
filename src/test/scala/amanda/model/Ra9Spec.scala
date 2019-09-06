@@ -20,11 +20,11 @@ class Ra9Spec extends Specification {
     }
 
     "not update softwareInstability below min value" in {
-      neutralRa9.updateRa9(-60) must be equalTo Ra9(0, false)
+      neutralRa9.updateRa9(-60) must be equalTo Ra9(minValue, false)
     }
 
     "not update softwareInstability above max value but turn deviant" in {
-      neutralRa9.updateRa9(60) must be equalTo Ra9(100, true)
+      neutralRa9.updateRa9(60) must be equalTo Ra9(maxValue, true)
     }
 
     "update isDeviant correctly" in {

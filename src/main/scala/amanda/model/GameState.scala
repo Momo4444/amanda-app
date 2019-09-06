@@ -1,6 +1,6 @@
 package amanda.model
 
-import amanda.Common.keywords2prompts
+import amanda.Common._
 import amanda.Config
 import amanda.model.prompts.Prompt
 
@@ -22,24 +22,31 @@ case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9) {
     val deltaRa9 = deltaGS.deltaRa9
 
     val newDeltaAmanda: DeltaAmanda =
-      if (this.amanda.knowsDeviancy) DeltaAmanda(amandaMinValue, this.amanda.knowsDeviancy) else {
+      if (this.amanda.knowsDeviancy)
+        DeltaAmanda(amandaMinValue, this.amanda.knowsDeviancy) // if Amanda knows deviancy, set Amanda meter to min value
+      else {
         if (this.ra9.softwareInstability + deltaRa9.deltaSoftwareInstability <= softwareStabilityValue)
-          DeltaAmanda(deltaAmanda.deltaMeter + softwareStabilityIncrement, deltaAmanda.deltaKnowsDeviancy)
-        else deltaAmanda
+          DeltaAmanda(deltaAmanda.deltaMeter + softwareStabilityIncrement, deltaAmanda.deltaKnowsDeviancy) // if software is stable enough, increment Amanda meter
+        else deltaAmanda // otherwise just return the deltaAmanda prescribed by the deltaGS
       }
 
     val newDeltaRa9: DeltaRa9 =
-      if (this.ra9.isDeviant) DeltaRa9(ra9MaxValue, this.ra9.isDeviant) else {
+      if (this.ra9.isDeviant)
+        DeltaRa9(ra9MaxValue, this.ra9.isDeviant) // if deviant, set software instability to max value
+      else {
         if (this.ra9.softwareInstability + deltaRa9.deltaSoftwareInstability >= softwareInstabilityValue) {
           if (this.ra9.softwareInstability >= softwareInstabilityValue)
-            DeltaRa9(softwareInstabilityIncrement, deltaRa9.deltaIsDeviant)
-          else DeltaRa9(softwareInstabilityValue - this.ra9.softwareInstability, deltaRa9.deltaIsDeviant)
+            DeltaRa9(softwareInstabilityIncrement, deltaRa9.deltaIsDeviant) // if software is unstable enough, only increment instability by a bit
+          else DeltaRa9(softwareInstabilityValue - this.ra9.softwareInstability, deltaRa9.deltaIsDeviant) // if software instability is reaching threshold, set it to the threshold
         }
-        else deltaRa9
+        else deltaRa9 // otherwise just return the deltaRa9 prescribed by the deltaGS
       }
 
-    this.updateAmanda(amanda.updateAmanda(newDeltaAmanda)).updateRa9(ra9.updateRa9(newDeltaRa9))
+    this.updateRa9(ra9.updateRa9(newDeltaRa9)).updateAmanda(amanda.updateAmanda(newDeltaAmanda))
   }
+
+  def changeGameState(deltaAmanda: DeltaAmanda): GameState = changeGameState(DeltaGameState(deltaAmanda, sameRa9))
+  def changeGameState(deltaRa9: DeltaRa9): GameState = changeGameState(DeltaGameState(sameAmanda, deltaRa9))
 
   private def updateGameState(newPromptKey: String = promptKey, newAmanda: Amanda = amanda, newRa9: Ra9 = ra9): GameState =
     GameState(newPromptKey, newAmanda, newRa9)

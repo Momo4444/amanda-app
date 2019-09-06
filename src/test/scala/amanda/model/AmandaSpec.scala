@@ -20,11 +20,11 @@ class AmandaSpec extends Specification {
     }
 
     "not update meter above max value" in {
-      neutralAmanda.updateAmanda(60) must be equalTo Amanda(100, false)
+      neutralAmanda.updateAmanda(60) must be equalTo Amanda(maxValue, false)
     }
 
     "not update meter below min value but turn evil" in {
-      neutralAmanda.updateAmanda(-60) must be equalTo Amanda(0, true)
+      neutralAmanda.updateAmanda(-60) must be equalTo Amanda(minValue, true)
     }
 
     "update knowsDeviancy correctly" in {
