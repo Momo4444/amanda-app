@@ -1,18 +1,9 @@
 package amanda.model.prompts
 
 import amanda.Common._
-import amanda.{DeltaGameState, GameState}
+import amanda.model.{DeltaGameState, GameState}
 
 case class Comment(message: String, keywords: List[String], deltaGS: DeltaGameState) extends Prompt {
-
-  def cycle2(gs: GameState): GameState = {
-    print(gs)
-    inputLoop
-    val nextPromptKey = keywords.head
-    val newGS = gs.updatePromptKey(nextPromptKey).changeGameState(keywords2prompts(nextPromptKey).deltaGS)
-    val deviancyProtocolGS = if (deltaGS.deltaRa9.deltaIsDeviant) newGS.runDeviancyProtocol else newGS
-    deviancyProtocolGS.prompt.cycle(deviancyProtocolGS)
-  }
 
   override def cycle(gs: GameState): GameState = {
     print(gs)

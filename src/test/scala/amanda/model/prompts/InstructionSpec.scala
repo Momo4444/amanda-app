@@ -1,7 +1,7 @@
 package amanda.model.prompts
 
-import amanda.DeltaGameState
 import amanda.Common._
+import amanda.model.DeltaGameState
 import org.specs2.mutable.Specification
 
 class InstructionSpec extends Specification {

@@ -1,7 +1,7 @@
 package amanda.model.prompts
 
 import amanda.Common.{formatMessage, sameGS}
-import amanda.{DeltaGameState, GameState}
+import amanda.model.{DeltaGameState, GameState}
 
 case class Terminus(message: String, keywords: List[String] = Nil, deltaGS: DeltaGameState = sameGS) extends Prompt {
 

@@ -1,7 +1,7 @@
 package amanda
 
 import amanda.model.prompts._
-import amanda.model.{DeltaAmanda, DeltaRa9}
+import amanda.model.{DeltaAmanda, DeltaGameState, DeltaRa9}
 
 object Common {
 

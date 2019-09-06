@@ -1,7 +1,7 @@
 package amanda
 
 import Common._
-import amanda.model.{Amanda, Ra9}
+import amanda.model.{Amanda, GameState, Ra9}
 
 object Main extends App {
 

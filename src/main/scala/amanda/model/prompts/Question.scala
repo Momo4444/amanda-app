@@ -1,7 +1,7 @@
 package amanda.model.prompts
 
 import amanda.Common._
-import amanda.{DeltaGameState, GameState}
+import amanda.model.{DeltaGameState, GameState}
 
 case class Choice(description: String, promptKey: String)
 

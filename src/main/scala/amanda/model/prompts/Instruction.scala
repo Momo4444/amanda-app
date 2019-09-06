@@ -1,7 +1,7 @@
 package amanda.model.prompts
 
 import amanda.Common._
-import amanda.{DeltaGameState, GameState}
+import amanda.model.{DeltaGameState, GameState}
 
 case class Instruction(message: String, keywords: List[String], deltaGS: DeltaGameState = sameGS) extends Prompt {
 

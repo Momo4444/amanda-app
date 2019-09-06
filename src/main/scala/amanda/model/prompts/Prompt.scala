@@ -1,6 +1,6 @@
 package amanda.model.prompts
 
-import amanda.{DeltaGameState, GameState}
+import amanda.model.{DeltaGameState, GameState}
 
 import scala.io.StdIn
 
