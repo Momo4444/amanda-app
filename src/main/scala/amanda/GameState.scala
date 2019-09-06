@@ -55,8 +55,6 @@ case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9) {
   val divider = "-" * (printWidth + 5)
   val scrollScreen = "\n" * scrollScreenValue
 
-  def cycle: GameState = prompt.cycle(this)
-
   def runDeviancyProtocol: GameState = keywords2prompts(deviancyPrompt).cycle(this)
 
 }

@@ -20,7 +20,7 @@ object Main extends App {
 //    println("\n")
 //  }
 
-  startState.cycle
+  startState.prompt.cycle(startState)
 
 }
 

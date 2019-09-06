@@ -10,7 +10,7 @@ case class Instruction(message: String, keywords: List[String], deltaGS: DeltaGa
     val nextPromptKey = inputLoop
     val newGS = gs.updatePromptKey(nextPromptKey).changeGameState(keywords2prompts(nextPromptKey).deltaGS)
     val deviancyProtocolGS = if (deltaGS.deltaRa9.deltaIsDeviant) newGS.runDeviancyProtocol else newGS
-    deviancyProtocolGS.cycle
+    deviancyProtocolGS.prompt.cycle(deviancyProtocolGS)
   }
 
   override def print(gs: GameState): Unit = {

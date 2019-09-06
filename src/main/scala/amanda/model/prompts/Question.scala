@@ -13,7 +13,7 @@ case class Question(message: String, responses: Map[String, Choice], keywords: L
     val nextPromptKey = responses(response).promptKey
     val newGS = gs.updatePromptKey(nextPromptKey).changeGameState(keywords2prompts(nextPromptKey).deltaGS)
     val deviancyProtocolGS = if (deltaGS.deltaRa9.deltaIsDeviant) newGS.runDeviancyProtocol else newGS
-    deviancyProtocolGS.cycle
+    deviancyProtocolGS.prompt.cycle(deviancyProtocolGS)
   }
 
   override def print(gs: GameState): Unit = {
