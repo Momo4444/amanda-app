@@ -3,6 +3,8 @@ package amanda.model.prompts
 import amanda.Common._
 import amanda.{DeltaGameState, GameState}
 
+case class Choice(description: String, promptKey: String)
+
 case class Question(message: String, responses: Map[String, Choice], keywords: List[String] = Nil, deltaGS: DeltaGameState = sameGS) extends Prompt {
 
   override def cycle(gs: GameState): GameState = {
