@@ -32,8 +32,6 @@ object Common {
 
     "questiontime" -> Question(
       "Est-ce que tu parles le francais?",
-      List(),
-      sameGS,
       Map(
         "y" -> Choice("Oui", "Ouais"),
         "n" -> Choice("Non", "Jamais")
@@ -94,8 +92,6 @@ object Common {
 
     "question" -> Question(
       "What is my favourite colour?",
-      List(),
-      sameGS,
       Map(
         "a" -> Choice("Blue", "bleu"),
         "b" -> Choice("Red", "rouge"),
