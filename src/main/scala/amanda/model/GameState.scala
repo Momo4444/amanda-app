@@ -16,6 +16,8 @@ case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9) {
   private val softwareStabilityIncrement = Config.amanda.softwareStabilityIncrement
   private val deviancyPrompt = Config.ra9.deviancyPrompt
 
+  private implicit val promptList = Config.gameState.promptList
+
   def changeGameState(deltaGS: DeltaGameState): GameState = {
 
     val deltaAmanda = deltaGS.deltaAmanda
@@ -55,13 +57,13 @@ case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9) {
   private def updateAmanda(newAmanda: Amanda): GameState = updateGameState(newAmanda = newAmanda)
   private def updateRa9(newRa9: Ra9): GameState = updateGameState(newRa9 = newRa9)
 
-  val prompt: Prompt = keywords2prompts(promptKey)
+  val prompt: Prompt = getPrompt(promptKey)
   val meters = s"Amanda: ${amanda.meter}%,   Software instability: ${ra9.softwareInstability}%"
   val printWidth = if (meters.length < defaultPrintWidth) defaultPrintWidth else meters.length
   val divider = "-" * (printWidth + 5)
   val scrollScreen = "\n" * scrollScreenValue
 
-  def runDeviancyProtocol: GameState = keywords2prompts(deviancyPrompt).cycle(this)
+  def runDeviancyProtocol: GameState = getPrompt(deviancyPrompt).cycle(this)
 
 }
 

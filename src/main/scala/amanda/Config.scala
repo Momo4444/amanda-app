@@ -4,6 +4,7 @@ import com.typesafe.config._
 import pureconfig._
 
 case class GameStateConfig(
+                          promptList: String,
                           startPrompt: String,
                           defaultPrintWidth: Int,
                           scrollScreenValue: Int,
