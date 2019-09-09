@@ -39,3 +39,8 @@ case class Instruction(message: String, keywords: List[String], deltaGS: DeltaGa
   }
 
 }
+
+class TestInstruction(mockedInput: String)(message: String, keywords: List[String], deltaGameState: DeltaGameState = sameGS)
+  extends Instruction(message, keywords, deltaGameState) {
+  override def readInput: String = mockedInput.toLowerCase()
+}

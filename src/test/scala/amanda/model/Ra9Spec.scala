@@ -4,6 +4,7 @@ import org.specs2.mutable.Specification
 import amanda.Config
 
 class Ra9Spec extends Specification {
+  sequential
 
   private val minValue = Config.ra9.minValue
   private val maxValue = Config.ra9.maxValue

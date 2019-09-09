@@ -18,7 +18,8 @@ lazy val commonSettings = Seq(
     "com.typesafe" % "config" % "1.3.1",
     "com.github.pureconfig" %% "pureconfig" % "0.7.0",
     "org.specs2" %% "specs2-core" % "4.3.2" % "test",
-  )
+  ),
+  parallelExecution in Test := false
 )
 
 lazy val root = (project in file("."))

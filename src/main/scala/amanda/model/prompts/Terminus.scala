@@ -31,3 +31,8 @@ case class Terminus(message: String, keywords: List[String] = Nil, deltaGS: Delt
   }
 
 }
+
+class TestTerminus(message: String, keywords: List[String] = Nil, deltaGS: DeltaGameState = sameGS)
+  extends Terminus(message, keywords, deltaGS) {
+  override def readInput: String = ""
+}

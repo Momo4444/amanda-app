@@ -3,6 +3,7 @@ package amanda.model
 import org.specs2.mutable.Specification
 
 class GameStateSpec extends Specification {
+  sequential
 
 //  private implicit val promptList = "GameStateSpec"
 

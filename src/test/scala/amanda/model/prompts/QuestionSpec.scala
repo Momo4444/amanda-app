@@ -3,6 +3,7 @@ package amanda.model.prompts
 import org.specs2.mutable.Specification
 
 class QuestionSpec extends Specification {
+  sequential
 
   "Question" should {
 
