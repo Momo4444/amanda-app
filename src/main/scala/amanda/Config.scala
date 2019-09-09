@@ -21,7 +21,7 @@ case class Ra9Config(
                       startValue: Int,
                       minValue: Int,
                       maxValue: Int,
-                      deviancyValue: Int,
+                      maximumSoftwareInstabilityValue: Int,
                       softwareInstabilityValue: Int,
                       softwareInstabilityIncrement: Int,
                       softwareStabilityValue: Int,

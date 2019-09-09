@@ -11,6 +11,7 @@ case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9) {
   private val amandaMinValue = Config.amanda.minValue
   private val amandaMaxValue = Config.amanda.maxValue
   private val ra9MaxValue = Config.ra9.maxValue
+  private val maximumSoftwareInstabilityValue = Config.ra9.maximumSoftwareInstabilityValue
   private val softwareInstabilityValue = Config.ra9.softwareInstabilityValue
   private val softwareInstabilityIncrement = Config.ra9.softwareInstabilityIncrement
   private val softwareStabilityValue = Config.ra9.softwareStabilityValue
@@ -34,12 +35,14 @@ case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9) {
       }
 
     val newDeltaRa9: DeltaRa9 =
-      if (this.ra9.isDeviant)
+      if (this.ra9.isDeviant || deltaRa9.deltaIsDeviant)
         DeltaRa9(ra9MaxValue, this.ra9.isDeviant) // if deviant, set software instability to max value
       else {
         if (this.ra9.softwareInstability + deltaRa9.deltaSoftwareInstability >= softwareInstabilityValue) {
           if (this.ra9.softwareInstability >= softwareInstabilityValue)
-            DeltaRa9(softwareInstabilityIncrement, deltaRa9.deltaIsDeviant) // if software is unstable enough, only increment instability by a bit
+            if (this.ra9.softwareInstability == maximumSoftwareInstabilityValue && deltaRa9.deltaSoftwareInstability >= 0)
+              DeltaRa9(0, deltaRa9.deltaIsDeviant) // if software is at maximum instability, keep it at the maximum
+            else DeltaRa9(softwareInstabilityIncrement, deltaRa9.deltaIsDeviant) // if software is unstable enough, only increment instability by a bit
           else DeltaRa9(softwareInstabilityValue - this.ra9.softwareInstability, deltaRa9.deltaIsDeviant) // if software instability is reaching threshold, set it to the threshold
         }
         else deltaRa9 // otherwise just return the deltaRa9 prescribed by the deltaGS
