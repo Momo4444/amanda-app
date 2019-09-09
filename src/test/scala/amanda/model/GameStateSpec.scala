@@ -41,6 +41,10 @@ class GameStateSpec extends Specification {
       knowsDeviancyGS.changeGameState(DeltaAmanda(20, false)) must be equalTo
         GameState("", Amanda(0, true), Ra9(100, true))
 
+      // Still finds out about deviancy when via meter and boolean
+      deviantGS.changeGameState(DeltaAmanda(-60, true)) must be equalTo
+        GameState("", Amanda(0, true), Ra9(100, true))
+
     }
 
     "update Ra9 correctly" in {
@@ -76,6 +80,30 @@ class GameStateSpec extends Specification {
       // When deviant, remains deviant
       deviantGS.changeGameState(DeltaRa9(-20, false)) must be equalTo
         GameState("", Amanda(50, false), Ra9(100, true))
+
+      // Still goes deviant when hitting the instability threshold
+      neutralGS.changeGameState(DeltaRa9(40, true)) must be equalTo
+        GameState("", Amanda(50, false), Ra9(100, true))
+
+      // Still goes deviant when on the maximum instability value (these two go up)
+      softwareMaximumInstabilityGS.changeGameState(DeltaRa9(5, true)) must be equalTo
+        GameState("", Amanda(50, false), Ra9(100, true))
+
+    }
+
+    "update Amanda and Ra9 in the correct order" in {
+
+      // Amanda doesn't increment when Ra9 stops being stable
+      softwareStableGS.changeGameState(DeltaRa9(10, false)) must be equalTo
+        GameState("", Amanda(50, false), Ra9(10, false))
+
+      // Ra9 becomes deviant at the same time as Amanda finding out via meter
+      neutralGS.changeGameState(DeltaGameState(DeltaAmanda(-60, false), DeltaRa9(0, true))) must be equalTo
+        GameState("", Amanda(0, true), Ra9(100, true))
+
+      // Ra9 becomes deviant at the same time as Amanda finding out via boolean
+      neutralGS.changeGameState(DeltaGameState(DeltaAmanda(0, true), DeltaRa9(0, true))) must be equalTo
+        GameState("", Amanda(0, true), Ra9(100, true))
 
     }
 
