@@ -4,7 +4,7 @@ import amanda.Common._
 import amanda.Config
 import amanda.model.{DeltaGameState, GameState}
 
-case class Comment(message: String, keywords: List[String], deltaGS: DeltaGameState) extends Prompt {
+case class Comment(message: String, keywords: List[String], deltaGS: DeltaGameState = sameGS) extends Prompt {
 
   private implicit val promptList = Config.gameState.promptList
 
@@ -36,4 +36,9 @@ case class Comment(message: String, keywords: List[String], deltaGS: DeltaGameSt
     input
   }
 
+}
+
+class TestComment(message: String, keywords: List[String], deltaGS: DeltaGameState = sameGS)
+  extends Comment(message, keywords, deltaGS) {
+  override def readInput: String = ""
 }
