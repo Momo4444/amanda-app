@@ -9,6 +9,7 @@ case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9) {
   private val defaultPrintWidth = Config.gameState.defaultPrintWidth
   private val scrollScreenValue = Config.gameState.scrollScreenValue
   private val amandaMinValue = Config.amanda.minValue
+  private val amandaMaxValue = Config.amanda.maxValue
   private val ra9MaxValue = Config.ra9.maxValue
   private val softwareInstabilityValue = Config.ra9.softwareInstabilityValue
   private val softwareInstabilityIncrement = Config.ra9.softwareInstabilityIncrement
@@ -24,8 +25,8 @@ case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9) {
     val deltaRa9 = deltaGS.deltaRa9
 
     val newDeltaAmanda: DeltaAmanda =
-      if (this.amanda.knowsDeviancy)
-        DeltaAmanda(amandaMinValue, this.amanda.knowsDeviancy) // if Amanda knows deviancy, set Amanda meter to min value
+      if (this.amanda.knowsDeviancy || deltaAmanda.deltaKnowsDeviancy)
+        DeltaAmanda(amandaMaxValue * (-1), true) // if Amanda knows deviancy, set Amanda meter to min value
       else {
         if (this.ra9.softwareInstability + deltaRa9.deltaSoftwareInstability <= softwareStabilityValue)
           DeltaAmanda(deltaAmanda.deltaMeter + softwareStabilityIncrement, deltaAmanda.deltaKnowsDeviancy) // if software is stable enough, increment Amanda meter
@@ -49,6 +50,7 @@ case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9) {
 
   def changeGameState(deltaAmanda: DeltaAmanda): GameState = changeGameState(DeltaGameState(deltaAmanda, sameRa9))
   def changeGameState(deltaRa9: DeltaRa9): GameState = changeGameState(DeltaGameState(sameAmanda, deltaRa9))
+  def changeGameState(): GameState = changeGameState(DeltaGameState(sameAmanda, sameRa9))
 
   private def updateGameState(newPromptKey: String = promptKey, newAmanda: Amanda = amanda, newRa9: Ra9 = ra9): GameState =
     GameState(newPromptKey, newAmanda, newRa9)
@@ -57,7 +59,7 @@ case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9) {
   private def updateAmanda(newAmanda: Amanda): GameState = updateGameState(newAmanda = newAmanda)
   private def updateRa9(newRa9: Ra9): GameState = updateGameState(newRa9 = newRa9)
 
-  val prompt: Prompt = getPrompt(promptKey)
+  lazy val prompt: Prompt = getPrompt(promptKey)
   val meters = s"Amanda: ${amanda.meter}%,   Software instability: ${ra9.softwareInstability}%"
   val printWidth = if (meters.length < defaultPrintWidth) defaultPrintWidth else meters.length
   val divider = "-" * (printWidth + 5)

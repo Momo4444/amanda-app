@@ -14,7 +14,6 @@ case class AmandaConfig(
                          startValue: Int,
                          minValue: Int,
                          maxValue: Int,
-                         deviancyValue: Int,
                          softwareStabilityIncrement: Int,
                        )
 
