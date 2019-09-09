@@ -47,3 +47,8 @@ case class Question(message: String, responses: Map[String, Choice], keywords: L
   }
 
 }
+
+class TestQuestion(mockedInput: String)(message: String, responses: Map[String, Choice], keywords: List[String] = Nil, deltaGS: DeltaGameState = sameGS)
+  extends Question(message, responses, keywords, deltaGS) {
+  override def readInput: String = mockedInput.toLowerCase()
+}

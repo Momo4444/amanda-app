@@ -10,7 +10,7 @@ class TerminusSpec extends Specification {
 
     "end a GameState with a Terminus Prompt" in {
 
-      val terminus1 = new TestTerminus("End of terminusspec test")
+      val terminus1 = new TestTerminus("End of test")
       terminus1.cycle(GameState("terminus01", Amanda(50, false), Ra9(50, false))) must be equalTo
         GameState("terminus01", Amanda(50, false), Ra9(50, false))
 

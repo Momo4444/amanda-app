@@ -19,7 +19,8 @@ object Common {
     "testspecs" -> Map(
       "terminus" -> new TestTerminus("End of test"),
       "instruction02" -> new TestInstruction("terminus")("Here is a second test instruction.", List("terminus"), DeltaGameState(DeltaAmanda(-10), DeltaRa9(20))),
-      "comment02" -> new TestComment("Here is a second test comment.", List("terminus"), DeltaGameState(DeltaAmanda(15), DeltaRa9(-25)))
+      "comment02" -> new TestComment("Here is a second test comment.", List("terminus"), DeltaGameState(DeltaAmanda(15), DeltaRa9(-25))),
+      "question02" -> new TestQuestion("a")("Here is a second test question.", Map("a" -> Choice("Terminus", "terminus")), Nil, DeltaGameState(DeltaAmanda(2), DeltaRa9(2))),
     ),
 
 

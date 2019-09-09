@@ -1,5 +1,6 @@
 package amanda.model.prompts
 
+import amanda.model._
 import org.specs2.mutable.Specification
 
 class QuestionSpec extends Specification {
@@ -23,10 +24,18 @@ class QuestionSpec extends Specification {
       )).inputLoop must be equalTo "c"
     }
 
+    "cycle a GameState through a Question Prompt" in {
+
+      val question1 = new TestQuestion("b")("What is my favourite test colour?", Map(
+        "a" -> Choice("Blue", "blue"),
+        "b" -> Choice("Orange", "question02"),
+        "c" -> Choice("Purple", "purple")
+      ))
+      question1.cycle(GameState("question01", Amanda(50, false), Ra9(50, false))) must be equalTo
+        GameState("terminus", Amanda(52, false), Ra9(52, false))
+
+    }
+
   }
 
-}
-
-class TestQuestion(mockedInput: String)(message: String, responses: Map[String, Choice]) extends Question(message, responses) {
-  override def readInput: String = mockedInput.toLowerCase()
 }
