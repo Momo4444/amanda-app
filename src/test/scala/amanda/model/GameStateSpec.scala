@@ -107,6 +107,15 @@ class GameStateSpec extends Specification {
 
     }
 
+    "update prompt key correctly" in {
+      neutralGS.updatePromptKey("updated") must be equalTo
+        GameState("updated", Amanda(50, false), Ra9(50, false))
+    }
+
+    "run deviancy protocol" in {
+      success
+    }.mute
+
   }
 
 }
