@@ -1,6 +1,6 @@
 package amanda.model.prompts
 
-import amanda.Common.getPrompt
+import amanda.Common._
 import amanda.Config
 import amanda.model.{DeltaGameState, GameState}
 
@@ -18,6 +18,7 @@ trait Prompt {
 
   def deviencyProtocol(gs: GameState, oldPromptKey: String): GameState = {
     if (deltaGS.deltaRa9.deltaIsDeviant) {
+      Prompt.deviencyProtocolTriggered = true
       val postDeviancyProtocolGS = gs.runDeviancyProtocol // if turning deviant, run the Deviancy Protocol
       getPrompt(oldPromptKey).cycle(postDeviancyProtocolGS) // before returning to the old Prompt
     }
@@ -32,4 +33,8 @@ trait Prompt {
     keywords.contains(input)
   }
 
+}
+
+object Prompt {
+  var deviencyProtocolTriggered: Boolean = false
 }
