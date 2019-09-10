@@ -1,11 +1,11 @@
 package amanda
 
 import amanda.model.{DeltaAmanda, DeltaGameState, DeltaRa9, GameState}
-import amanda.model.prompts.{Comment, Prompt, SpecialComment, Terminus}
+import amanda.model.prompts.{Comment, Prompt, Checkpoint, Terminus}
 import amanda.Common._
 import amanda.Config
 
-object SpecialPrompts {
+object Checkpoints {
 
   private val softwareInstabilityValue = Config.ra9.softwareInstabilityValue
   private val softwareStabilityValue = Config.ra9.softwareStabilityValue
@@ -14,7 +14,7 @@ object SpecialPrompts {
 
     "start" -> Comment("Special prompts...", List("special1"), sameGS),
 
-    "special1" -> SpecialComment(
+    "special1" -> Checkpoint(
       "end",
       (gs: GameState, nextPrompt: List[String]) => {
         if (!gs.ra9.isDeviant) // if not deviant

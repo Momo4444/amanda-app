@@ -16,7 +16,7 @@ object Common {
 
   val keyword2prompts: Map[String, Map[String, Prompt]] = Map(
 
-    "specialprompts" -> SpecialPrompts.specialPrompts,
+    "specialprompts" -> Checkpoints.specialPrompts,
 
 
 
