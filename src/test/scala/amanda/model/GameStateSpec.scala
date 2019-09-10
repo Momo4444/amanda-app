@@ -10,7 +10,7 @@ class GameStateSpec extends Specification {
   private val neutralGS = GameState("neutralgs", Amanda(50, false), Ra9(50, false), "")
   private val knowsDeviancyGS = GameState("knowsdeviancygs", Amanda(0, true), Ra9(100, true), "")
   private val softwareStableGS = GameState("softwarestablegs", Amanda(50, false), Ra9(0, false), "")
-  private val softwareUnstableGS = GameState("softwareunstablegs", Amanda(50, false), Ra9(85, false), "")
+  private val softwareUnstableGS = GameState("softwareunstablegs", Amanda(50, false), Ra9(95, false), "")
   private val softwareMaximumInstabilityGS = GameState("softwaremaximuminstabilitygs", Amanda(50, false), Ra9(99, false), "")
   private val deviantGS = GameState("deviantgs", Amanda(50, false), Ra9(100, true), "")
 
@@ -67,16 +67,16 @@ class GameStateSpec extends Specification {
         GameState("neutralgs", Amanda(55, false), Ra9(0, false), "neutralgs")
 
       // Positive increase to software instability
-      neutralGS.changeGameState(DeltaRa9(35, false)) must be equalTo
-        GameState("neutralgs", Amanda(50, false), Ra9(80, false), "neutralgs")
+      neutralGS.changeGameState(DeltaRa9(45, false)) must be equalTo
+        GameState("neutralgs", Amanda(50, false), Ra9(90, false), "neutralgs")
 
       // Positive increase to software instability (massive)
       neutralGS.changeGameState(DeltaRa9(70, false)) must be equalTo
-        GameState("neutralgs", Amanda(50, false), Ra9(80, false), "neutralgs")
+        GameState("neutralgs", Amanda(50, false), Ra9(90, false), "neutralgs")
 
       // Positive increment during software instability
       softwareUnstableGS.changeGameState(DeltaRa9(20, false)) must be equalTo
-        GameState("softwareunstablegs", Amanda(50, false), Ra9(86, false), "softwareunstablegs")
+        GameState("softwareunstablegs", Amanda(50, false), Ra9(96, false), "softwareunstablegs")
 
       // Maximum increase during software instability
       softwareMaximumInstabilityGS.changeGameState(DeltaRa9(20, false)) must be equalTo
@@ -91,10 +91,10 @@ class GameStateSpec extends Specification {
         GameState("deviantgs", Amanda(50, false), Ra9(100, true), "deviantgs")
 
       // Still goes deviant when hitting the instability threshold
-      neutralGS.changeGameState(DeltaRa9(40, true)) must be equalTo
+      neutralGS.changeGameState(DeltaRa9(45, true)) must be equalTo
         GameState("neutralgs", Amanda(50, false), Ra9(100, true), "neutralgs")
 
-      // Still goes deviant when on the maximum instability value (these two go up)
+      // Still goes deviant when on the maximum instability value
       softwareMaximumInstabilityGS.changeGameState(DeltaRa9(5, true)) must be equalTo
         GameState("softwaremaximuminstabilitygs", Amanda(50, false), Ra9(100, true), "softwaremaximuminstabilitygs")
 
