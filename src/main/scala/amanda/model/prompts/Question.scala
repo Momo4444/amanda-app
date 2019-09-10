@@ -11,18 +11,11 @@ case class Question(message: String, responses: Map[String, Choice], keywords: L
   private implicit val promptList = Config.gameState.promptList
 
   override def cycle(gs: GameState): GameState = {
-
     print(gs)
     val response = inputLoop
     val nextPromptKey = responses(response).promptKey
     val newGS = gs.changeGameState(getPrompt(nextPromptKey).deltaGS).updatePromptKey(nextPromptKey)
-
-    if (deltaGS.deltaRa9.deltaIsDeviant) {
-      val postDeviancyProtocolGS = newGS.runDeviancyProtocol // if turning deviant, run the Deviancy Protocol
-      getPrompt(gs.oldPromptKey).cycle(postDeviancyProtocolGS) // before returning to the old Prompt
-    }
-    else newGS.prompt.cycle(newGS) // otherwise cycle into the next Prompt
-
+    deviencyProtocol(newGS, gs.oldPromptKey)
   }
 
   override def print(gs: GameState): Unit = {

@@ -63,7 +63,7 @@ object Common {
         deltaGS = DeltaGameState(DeltaAmanda(10), sameRa9)
       ),
 
-      "iamra9" -> Instruction(
+      "iamra9" -> Comment(
         "gOiNg DeViAnT...",
         List("deviant"),
         DeltaGameState(sameAmanda, DeltaRa9(0, true))

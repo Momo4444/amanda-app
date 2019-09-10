@@ -10,17 +10,10 @@ case class Instruction(message: String, keywords: List[String], deltaGS: DeltaGa
   private val deviancyPrompt = Config.ra9.deviancyPrompt
 
   override def cycle(gs: GameState): GameState = {
-
     print(gs)
     val nextPromptKey = inputLoop
     val newGS = gs.changeGameState(getPrompt(nextPromptKey).deltaGS).updatePromptKey(nextPromptKey)
-
-    if (deltaGS.deltaRa9.deltaIsDeviant) {
-      val postDeviancyProtocolGS = newGS.runDeviancyProtocol // if turning deviant, run the Deviancy Protocol
-      getPrompt(gs.oldPromptKey).cycle(postDeviancyProtocolGS) // before returning to the old Prompt
-    }
-    else newGS.prompt.cycle(newGS) // otherwise cycle into the next Prompt
-
+    deviencyProtocol(newGS, gs.oldPromptKey)
   }
 
   override def print(gs: GameState): Unit = {
