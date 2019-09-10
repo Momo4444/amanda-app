@@ -22,6 +22,14 @@ class GameStateSpec extends Specification {
       neutralGS.changeGameState(DeltaAmanda(24, false)) must be equalTo
         GameState("neutralgs", Amanda(74, false), Ra9(50, false), "neutralgs")
 
+      // Negative increase is multiplied when deviant
+      deviantGS.changeGameState(DeltaAmanda(-20, false)) must be equalTo
+        GameState("deviantgs", Amanda(20, false), Ra9(100, true), "deviantgs")
+
+      // Positive increase is normal when deviant
+      deviantGS.changeGameState(DeltaAmanda(20, false)) must be equalTo
+        GameState("deviantgs", Amanda(70, false), Ra9(100, true), "deviantgs")
+
       // Maximum increase
       neutralGS.changeGameState(DeltaAmanda(63, false)) must be equalTo
         GameState("neutralgs", Amanda(100, false), Ra9(50, false), "neutralgs")

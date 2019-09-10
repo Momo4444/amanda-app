@@ -10,6 +10,7 @@ case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9, oldPromptKey: 
   private val scrollScreenValue = Config.gameState.scrollScreenValue
   private val amandaMinValue = Config.amanda.minValue
   private val amandaMaxValue = Config.amanda.maxValue
+  private val amandaDeviancyMultiplier = Config.amanda.amandaDeviancyMultiplier
   private val ra9MaxValue = Config.ra9.maxValue
   private val maximumSoftwareInstabilityValue = Config.ra9.maximumSoftwareInstabilityValue
   private val softwareInstabilityValue = Config.ra9.softwareInstabilityValue
@@ -28,11 +29,11 @@ case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9, oldPromptKey: 
     val newDeltaAmanda: DeltaAmanda =
       if (this.amanda.knowsDeviancy || deltaAmanda.deltaKnowsDeviancy)
         DeltaAmanda(amandaMaxValue * (-1), true) // if Amanda knows deviancy, set Amanda meter to min value
-      else {
-        if (this.ra9.softwareInstability + deltaRa9.deltaSoftwareInstability <= softwareStabilityValue)
-          DeltaAmanda(deltaAmanda.deltaMeter + softwareStabilityIncrement, deltaAmanda.deltaKnowsDeviancy) // if software is stable enough, increment Amanda meter
-        else deltaAmanda // otherwise just return the deltaAmanda prescribed by the deltaGS
-      }
+      else if (this.ra9.softwareInstability + deltaRa9.deltaSoftwareInstability <= softwareStabilityValue)
+        DeltaAmanda(deltaAmanda.deltaMeter + softwareStabilityIncrement, deltaAmanda.deltaKnowsDeviancy) // if software is stable enough, increment Amanda meter
+      else if (this.ra9.isDeviant && deltaAmanda.deltaMeter < 0)
+        DeltaAmanda((deltaAmanda.deltaMeter * amandaDeviancyMultiplier).toInt, deltaAmanda.deltaKnowsDeviancy) // if deviant, Amanda meter decreases get boosted by multiplier
+      else deltaAmanda // otherwise just return the deltaAmanda prescribed by the deltaGS
 
     val newDeltaRa9: DeltaRa9 =
       if (this.ra9.isDeviant || deltaRa9.deltaIsDeviant)

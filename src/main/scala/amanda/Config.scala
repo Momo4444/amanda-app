@@ -15,6 +15,7 @@ case class AmandaConfig(
                          minValue: Int,
                          maxValue: Int,
                          softwareStabilityIncrement: Int,
+                         amandaDeviancyMultiplier: Double,
                        )
 
 case class Ra9Config(
