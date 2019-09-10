@@ -11,7 +11,7 @@ object Main extends App {
 
   val startAmanda = Amanda(amandaStartValue, false)
   val startRa9 = Ra9(ra9StartValue, false)
-  val startState = GameState(startPrompt, startAmanda, startRa9)
+  val startState = GameState(startPrompt, startAmanda, startRa9, "")
 
 //  for ((k, v) <- prompts) {
 //    println(s"Keyword: $k")

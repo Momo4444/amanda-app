@@ -12,8 +12,8 @@ class CommentSpec extends Specification {
     "cycle a GameState through a Comment Prompt" in {
 
       val comment1 = new TestComment("Here is a test comment.", List("comment02"), sameGS)
-      comment1.cycle(GameState("comment01", Amanda(50, false), Ra9(50,false))) must be equalTo
-        GameState("terminus", Amanda(65, false), Ra9(25, false))
+      comment1.cycle(GameState("comment01", Amanda(50, false), Ra9(50,false), "")) must be equalTo
+        GameState("terminus", Amanda(65, false), Ra9(25, false), "comment02")
 
     }
 

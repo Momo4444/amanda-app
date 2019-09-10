@@ -31,8 +31,8 @@ class QuestionSpec extends Specification {
         "b" -> Choice("Orange", "question02"),
         "c" -> Choice("Purple", "purple")
       ))
-      question1.cycle(GameState("question01", Amanda(50, false), Ra9(50, false))) must be equalTo
-        GameState("terminus", Amanda(52, false), Ra9(52, false))
+      question1.cycle(GameState("question01", Amanda(50, false), Ra9(50, false), "")) must be equalTo
+        GameState("terminus", Amanda(52, false), Ra9(52, false), "question02")
 
     }
 

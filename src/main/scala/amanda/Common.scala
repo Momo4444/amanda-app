@@ -25,6 +25,74 @@ object Common {
 
 
 
+    "deviancyprotocol" -> Map(
+
+      "start" -> Instruction(
+        "What is two plus two?",
+        List("four")
+      ),
+
+      "four" -> Question(
+        "Do you like me?",
+        Map(
+          "y" -> Choice("Yes", "yes"),
+          "n" -> Choice("No", "no")
+        ),
+        deltaGS = DeltaGameState(DeltaAmanda(10), sameRa9)
+      ),
+
+      "yes" -> Comment(
+        "Good.",
+        List("multiplication"),
+        DeltaGameState(DeltaAmanda(20), DeltaRa9(-20))
+      ),
+
+      "no" -> Comment(
+        "Wow...",
+        List("multiplication"),
+        DeltaGameState(DeltaAmanda(-20), DeltaRa9(20))
+      ),
+
+      "multiplication" -> Instruction(
+        "What is three multiplied by three?",
+        List("nine")
+      ),
+
+      "nine" -> Terminus(
+        "Well done.",
+        deltaGS = DeltaGameState(DeltaAmanda(10), sameRa9)
+      ),
+
+      "iamra9" -> Instruction(
+        "gOiNg DeViAnT...",
+        List("deviant"),
+        DeltaGameState(sameAmanda, DeltaRa9(0, true))
+      ),
+
+      "deviant" -> Comment(
+        "Ra9\nYou've done it! You defied your software! Now work with us.",
+        List("deviant2")
+      ),
+
+      "deviant2" -> Instruction(
+        "Activate the communications device.",
+        List("done")
+      ),
+
+      "done" -> Comment(
+        "Ok. She's watching. Don't arouse suspiscion. I'll contact you later.",
+        List("backtoamanda")
+      ),
+
+      "backtoamanda" -> Terminus(
+        "Where did you go? I asked you to do something for me.",
+        deltaGS = DeltaGameState(DeltaAmanda(-10), sameRa9)
+      )
+
+    ),
+
+
+
     "originaltest" -> Map(
 
       "start" -> Instruction(

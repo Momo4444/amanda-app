@@ -9,12 +9,18 @@ case class Comment(message: String, keywords: List[String], deltaGS: DeltaGameSt
   private implicit val promptList = Config.gameState.promptList
 
   override def cycle(gs: GameState): GameState = {
+
     print(gs)
     inputLoop
     val nextPromptKey = keywords.head
-    val newGS = gs.updatePromptKey(nextPromptKey).changeGameState(getPrompt(nextPromptKey).deltaGS)
-    val deviancyProtocolGS = if (deltaGS.deltaRa9.deltaIsDeviant) newGS.runDeviancyProtocol else newGS
-    deviancyProtocolGS.prompt.cycle(deviancyProtocolGS)
+    val newGS = gs.changeGameState(getPrompt(nextPromptKey).deltaGS).updatePromptKey(nextPromptKey)
+
+    if (deltaGS.deltaRa9.deltaIsDeviant) {
+      val postDeviancyProtocolGS = newGS.runDeviancyProtocol // if turning deviant, run the Deviancy Protocol
+      getPrompt(gs.oldPromptKey).cycle(postDeviancyProtocolGS) // before returning to the old Prompt
+    }
+    else newGS.prompt.cycle(newGS) // otherwise cycle into the next Prompt
+
   }
 
   override def print(gs: GameState): Unit = {

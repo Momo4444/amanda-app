@@ -18,8 +18,8 @@ class InstructionSpec extends Specification {
     "cycle a GameState through an Instruction Prompt" in {
 
       val instruction1 = new TestInstruction("instruction02")("Here is a test instruction.", List("instruction02"), sameGS)
-      instruction1.cycle(GameState("instruction01", Amanda(50, false), Ra9(50, false))) must be equalTo
-        GameState("terminus", Amanda(40, false), Ra9(70, false))
+      instruction1.cycle(GameState("instruction01", Amanda(50, false), Ra9(50, false), "")) must be equalTo
+        GameState("terminus", Amanda(40, false), Ra9(70, false), "instruction02")
 
     }
 

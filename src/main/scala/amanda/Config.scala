@@ -26,6 +26,7 @@ case class Ra9Config(
                       softwareInstabilityIncrement: Int,
                       softwareStabilityValue: Int,
                       deviancyPrompt: String,
+                      deviancyProtocolPrompt: String,
                     )
 
 object Config {

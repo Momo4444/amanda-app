@@ -4,7 +4,7 @@ import amanda.Common._
 import amanda.Config
 import amanda.model.prompts.Prompt
 
-case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9) {
+case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9, oldPromptKey: String) {
 
   private val defaultPrintWidth = Config.gameState.defaultPrintWidth
   private val scrollScreenValue = Config.gameState.scrollScreenValue
@@ -16,7 +16,7 @@ case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9) {
   private val softwareInstabilityIncrement = Config.ra9.softwareInstabilityIncrement
   private val softwareStabilityValue = Config.ra9.softwareStabilityValue
   private val softwareStabilityIncrement = Config.amanda.softwareStabilityIncrement
-  private val deviancyPrompt = Config.ra9.deviancyPrompt
+  private val deviancyProtocolPrompt = Config.ra9.deviancyProtocolPrompt
 
   private implicit val promptList = Config.gameState.promptList
 
@@ -48,7 +48,7 @@ case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9) {
         else deltaRa9 // otherwise just return the deltaRa9 prescribed by the deltaGS
       }
 
-    this.updateRa9(ra9.updateRa9(newDeltaRa9)).updateAmanda(amanda.updateAmanda(newDeltaAmanda))
+    this.updateRa9(ra9.updateRa9(newDeltaRa9)).updateAmanda(amanda.updateAmanda(newDeltaAmanda)).updateOldPromptKey(promptKey)
   }
 
   def changeGameState(deltaAmanda: DeltaAmanda): GameState = changeGameState(DeltaGameState(deltaAmanda, sameRa9))
@@ -56,19 +56,22 @@ case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9) {
   def changeGameState(): GameState = changeGameState(DeltaGameState(sameAmanda, sameRa9))
 
   private def updateGameState(newPromptKey: String = promptKey, newAmanda: Amanda = amanda, newRa9: Ra9 = ra9): GameState =
-    GameState(newPromptKey, newAmanda, newRa9)
+    GameState(newPromptKey, newAmanda, newRa9, oldPromptKey)
 
   def updatePromptKey(newPromptKey: String): GameState = updateGameState(newPromptKey = newPromptKey)
   private def updateAmanda(newAmanda: Amanda): GameState = updateGameState(newAmanda = newAmanda)
   private def updateRa9(newRa9: Ra9): GameState = updateGameState(newRa9 = newRa9)
 
   lazy val prompt: Prompt = getPrompt(promptKey)
+
+  def updateOldPromptKey(key: String): GameState = GameState(promptKey, amanda, ra9, key)
+
   val meters = s"Amanda: ${amanda.meter}%,   Software instability: ${ra9.softwareInstability}%"
   val printWidth = if (meters.length < defaultPrintWidth) defaultPrintWidth else meters.length
   val divider = "-" * (printWidth + 5)
   val scrollScreen = "\n" * scrollScreenValue
 
-  def runDeviancyProtocol: GameState = getPrompt(deviancyPrompt).cycle(this)
+  def runDeviancyProtocol: GameState = getPrompt(deviancyProtocolPrompt).cycle(this)
 
 }
 
