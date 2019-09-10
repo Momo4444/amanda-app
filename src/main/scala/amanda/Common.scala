@@ -16,6 +16,10 @@ object Common {
 
   val keyword2prompts: Map[String, Map[String, Prompt]] = Map(
 
+    "specialprompts" -> SpecialPrompts.specialPrompts,
+
+
+
     "testspecs" -> Map(
       "terminus" -> new TestTerminus("End of test"),
       "instruction02" -> new TestInstruction("terminus")("Here is a second test instruction.", List("terminus"), DeltaGameState(DeltaAmanda(-10), DeltaRa9(20))),

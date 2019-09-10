@@ -11,6 +11,7 @@ object Main extends App {
   val startAmanda = Amanda(amandaStartValue, false)
   val startRa9 = Ra9(ra9StartValue, false)
   val startState = GameState(startPrompt, startAmanda, startRa9, "")
+//  val startState = GameState(startPrompt, Amanda(30, false), Ra9(100, true), "")
 
   startState.prompt.cycle(startState)
 
