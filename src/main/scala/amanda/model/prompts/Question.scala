@@ -38,7 +38,7 @@ case class Question(message: String, responses: Map[String, Choice], keywords: L
 
   override def inputLoop: String = {
     val input = readInput
-    if (checkInput(input, responses.keys.toList)) input
+    if (Prompt.checkInput(input, responses.keys.toList)) input
     else {
       println("That is not a valid answer, try again.")
       inputLoop
