@@ -7,6 +7,7 @@ class CheckpointSpec extends Specification {
   sequential
 
   private val comment1 = new TestComment("Let's test Checkpoints.", List("checkpoint"))
+  private val comment2 = new TestComment("Let's test Checkpoints against Questions.", List("checkpointq"))
 
   "Checkpoint" should {
 
@@ -63,6 +64,23 @@ class CheckpointSpec extends Specification {
     "choose the correct Prompt for a deviant amanda does know medium amanda GameState" in {
       comment1.cycle(GameState("comment01", Amanda(50, true), Ra9(100, true), "")) must be equalTo
         GameState("terminus", Amanda(0, true), Ra9(100, true), "checkpoint")
+    }
+
+
+
+    "choose the correct Response for a Question towards a non-deviant GameState" in {
+      comment2.cycle(GameState("comment02", Amanda(50, false), Ra9(50, false), "")) must be equalTo
+        GameState("terminus", Amanda(55, false), Ra9(50, false), "softwareyes")
+    }
+
+    "choose the correct Response for a Question towards a deviant amanda doesn't know GameState" in {
+      comment2.cycle(GameState("comment02", Amanda(50, false), Ra9(100, true), "")) must be equalTo
+        GameState("terminus", Amanda(35, false), Ra9(100, true), "suspisciousno")
+    }
+
+    "choose the correct Response for a Question towards a deviant amanda does know GameState" in {
+      comment2.cycle(GameState("comment02", Amanda(50, true), Ra9(100, true), "")) must be equalTo
+        GameState("terminus", Amanda(0, true), Ra9(100, true), "disobeyyes")
     }
 
   }

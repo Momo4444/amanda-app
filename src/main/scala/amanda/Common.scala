@@ -60,6 +60,20 @@ object Common {
             new TestComment("You need to do better to prove to me that you are trustworthy.", nextPrompt, sameGS)
         }
       ),
+      "checkpointq" -> Checkpoint(
+        "",
+        (gs: GameState, nextPrompt: List[String]) => {
+          if (!gs.ra9.isDeviant) // if not deviant
+            new TestQuestion("y")("Is your software ok?", Map("y" -> Choice("Yes", "softwareyes"), "n" -> Choice("No", "softwareno")), nextPrompt, sameGS)
+          else if (!gs.amanda.knowsDeviancy) // if Amanda doesn't know deviancy
+            new TestQuestion("n")("Are you acting suspiscious?", Map("y" -> Choice("Yes", "suspisciousyes"), "n" -> Choice("No", "suspisciousno")), nextPrompt, sameGS)
+          else // Amanda knows deviancy
+            new TestQuestion("y")("Are you disobeying me?", Map("y" -> Choice("Yes", "disobeyyes"), "n" -> Choice("No", "disobeyno")), nextPrompt, sameGS)
+        }
+      ),
+      "softwareyes" -> new TestComment("Ok, I believe you.", List("terminus"), DeltaGameState(DeltaAmanda(5), sameRa9)),
+      "suspisciousno" -> new TestComment("I'm not sure if I believe you.", List("terminus"), DeltaGameState(DeltaAmanda(-10), sameRa9)),
+      "disobeyyes" -> new TestComment("How dare you.", List("terminus"), DeltaGameState(DeltaAmanda(-40), sameRa9)),
     ),
 
 
