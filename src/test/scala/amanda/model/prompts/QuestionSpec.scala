@@ -13,15 +13,15 @@ class QuestionSpec extends Specification {
         "a" -> Choice("Blue", new TestTerminus("blue")),
         "b" -> Choice("Orange", new TestTerminus("orange")),
         "c" -> Choice("Purple", new TestTerminus("purple"))
-      ), Nil).inputLoop must be equalTo "a"
+      )).inputLoop must be equalTo "a"
       new TestQuestion("b")("What is my favourite colour?", Map(
         "a" -> Choice("Blue", new TestTerminus("blue")),
         "b" -> Choice("Orange", new TestTerminus("orange")),
         "c" -> Choice("Purple", new TestTerminus("purple"))
-      ), Nil).inputLoop must be equalTo "b"
+      )).inputLoop must be equalTo "b"
       new TestQuestion("c")("What is my favourite colour?", Map(
         "c" -> Choice("Purple", new TestTerminus("purple"))
-      ), Nil).inputLoop must be equalTo "c"
+      )).inputLoop must be equalTo "c"
     }
 
     "cycle a GameState through a Question Prompt" in {
@@ -30,7 +30,7 @@ class QuestionSpec extends Specification {
         "a" -> Choice("Blue", new TestTerminus("blue")),
         "b" -> Choice("Orange", new TestComment("orange", List("question02"))),
         "c" -> Choice("Purple", new TestTerminus("purple"))
-      ), Nil)
+      ))
       question1.cycle(GameState("question01", Amanda(50, false), Ra9(50, false), "")) must be equalTo
         GameState("terminus", Amanda(52, false), Ra9(52, false), "question02")
 

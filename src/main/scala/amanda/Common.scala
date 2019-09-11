@@ -24,7 +24,7 @@ object Common {
       "terminus" -> new TestTerminus("End of test"),
       "instruction02" -> new TestInstruction("terminus")("Here is a second test instruction.", List("terminus"), DeltaGameState(DeltaAmanda(-10), DeltaRa9(20))),
       "comment02" -> new TestComment("Here is a second test comment.", List("terminus"), DeltaGameState(DeltaAmanda(15), DeltaRa9(-25))),
-      "question02" -> new TestQuestion("a")("Here is a second test question.", Map("a" -> Choice("Terminus", new TestComment("Ok", List("terminus")))), Nil, DeltaGameState(DeltaAmanda(2), DeltaRa9(2))),
+      "question02" -> new TestQuestion("a")("Here is a second test question.", Map("a" -> Choice("Terminus", new TestComment("Ok", List("terminus")))), DeltaGameState(DeltaAmanda(2), DeltaRa9(2))),
       "iamra9" -> new TestComment("Testing the deviancy protocol.", List("deviant"), DeltaGameState(sameAmanda, DeltaRa9(0, true))),
       "deviant" -> new TestComment("Testing the deviancy protocol.", List("dpterminus")),
       "dpterminus" -> new TestTerminus("End of deviancy protocol."),
@@ -65,19 +65,19 @@ object Common {
         (gs: GameState, nextPrompt: List[String]) => {
           if (!gs.ra9.isDeviant) // if not deviant
             new TestQuestion("y")("Is your software ok?", Map(
-              "y" -> Choice("Yes", new TestComment("Ok, I believe you.", List("terminus"), DeltaGameState(DeltaAmanda(5), sameRa9))),
-              "n" -> Choice("No", new TestComment("Thank you for telling me.", List("terminus"), DeltaGameState(sameAmanda, DeltaRa9(5))))
-            ), nextPrompt, sameGS)
+              "y" -> Choice("Yes", new TestComment("Ok, I believe you.", nextPrompt, DeltaGameState(DeltaAmanda(5), sameRa9))),
+              "n" -> Choice("No", new TestComment("Thank you for telling me.", nextPrompt, DeltaGameState(sameAmanda, DeltaRa9(5))))
+            ), sameGS)
           else if (!gs.amanda.knowsDeviancy) // if Amanda doesn't know deviancy
             new TestQuestion("n")("Are you acting suspiscious?", Map(
-              "y" -> Choice("Yes", new TestComment("YOU'RE DEVIANT AREN'T YOU!", List("terminus"), DeltaGameState(DeltaAmanda(-100, true), sameRa9))),
-              "n" -> Choice("No", new TestComment("I'm not sure if I believe you.", List("terminus"), DeltaGameState(DeltaAmanda(-10), sameRa9)))
-            ), nextPrompt, sameGS)
+              "y" -> Choice("Yes", new TestComment("YOU'RE DEVIANT AREN'T YOU!", nextPrompt, DeltaGameState(DeltaAmanda(-100, true), sameRa9))),
+              "n" -> Choice("No", new TestComment("I'm not sure if I believe you.", nextPrompt, DeltaGameState(DeltaAmanda(-10), sameRa9)))
+            ), sameGS)
           else // Amanda knows deviancy
             new TestQuestion("y")("Are you disobeying me?", Map(
-              "y" -> Choice("Yes", new TestComment("How dare you.", List("terminus"), DeltaGameState(DeltaAmanda(-40), sameRa9))),
-              "n" -> Choice("No", new TestComment("Ok, if you say so.", List("terminus"), sameGS))
-            ), nextPrompt, sameGS)
+              "y" -> Choice("Yes", new TestComment("How dare you.", nextPrompt, DeltaGameState(DeltaAmanda(-40), sameRa9))),
+              "n" -> Choice("No", new TestComment("Ok, if you say so.", nextPrompt, sameGS))
+            ), sameGS)
         }
       ),
     ),
@@ -105,7 +105,6 @@ object Common {
             DeltaGameState(DeltaAmanda(-20), DeltaRa9(20))
           ))
         ),
-        List("multiplication"),
         DeltaGameState(DeltaAmanda(10), sameRa9)
       ),
 
@@ -181,7 +180,6 @@ object Common {
             DeltaGameState(DeltaAmanda(-50, false), DeltaRa9(50, false))
           ))
         ),
-        List()
       ),
 
       "second" -> Instruction(
@@ -248,7 +246,6 @@ object Common {
             DeltaGameState(DeltaAmanda(-30, false), DeltaRa9(0, false))
           )),
         ),
-        List("finish")
       ),
 
       "instability" -> Comment(
@@ -348,8 +345,6 @@ object Common {
     )
 
   )
-
-//  val responses2keywords: Map[String, String]
 
   def formatMessage(message: String, width: Int): String = {
     val chars = message.toList

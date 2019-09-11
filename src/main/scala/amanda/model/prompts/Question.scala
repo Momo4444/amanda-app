@@ -6,9 +6,11 @@ import amanda.model.{DeltaGameState, GameState}
 
 case class Choice(description: String, prompt: Prompt)
 
-case class Question(message: String, responses: Map[String, Choice], keywords: List[String], deltaGS: DeltaGameState = sameGS) extends Prompt {
+case class Question(message: String, responses: Map[String, Choice], deltaGS: DeltaGameState = sameGS) extends Prompt {
 
   private implicit val promptList = Config.gameState.promptList
+
+  override val keywords: List[String] = Nil
 
   override def cycle(gs: GameState): GameState = {
     print(gs)
@@ -47,7 +49,7 @@ case class Question(message: String, responses: Map[String, Choice], keywords: L
 
 }
 
-class TestQuestion(mockedInput: String)(message: String, responses: Map[String, Choice], keywords: List[String], deltaGS: DeltaGameState = sameGS)
-  extends Question(message, responses, keywords, deltaGS) {
+class TestQuestion(mockedInput: String)(message: String, responses: Map[String, Choice], deltaGS: DeltaGameState = sameGS)
+  extends Question(message, responses, deltaGS) {
   override def readInput: String = mockedInput.toLowerCase()
 }
