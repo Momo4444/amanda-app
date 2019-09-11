@@ -43,7 +43,9 @@ case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9, oldPromptKey: 
           if (this.ra9.softwareInstability >= softwareInstabilityValue)
             if (this.ra9.softwareInstability == maximumSoftwareInstabilityValue && deltaRa9.deltaSoftwareInstability >= 0)
               DeltaRa9(0, deltaRa9.deltaIsDeviant) // if software is at maximum instability, keep it at the maximum
-            else DeltaRa9(softwareInstabilityIncrement, deltaRa9.deltaIsDeviant) // if software is unstable enough, only increment instability by a bit
+            else if (deltaRa9.deltaSoftwareInstability > 0)
+              DeltaRa9(softwareInstabilityIncrement, deltaRa9.deltaIsDeviant) // if software is unstable enough, only increment instability by a bit
+            else deltaRa9 // return deltaRa9 if unstable but software instability is decreasing
           else DeltaRa9(softwareInstabilityValue - this.ra9.softwareInstability, deltaRa9.deltaIsDeviant) // if software instability is reaching threshold, set it to the threshold
         }
         else deltaRa9 // otherwise just return the deltaRa9 prescribed by the deltaGS

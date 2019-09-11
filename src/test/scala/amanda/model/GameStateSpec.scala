@@ -82,6 +82,14 @@ class GameStateSpec extends Specification {
       softwareMaximumInstabilityGS.changeGameState(DeltaRa9(20, false)) must be equalTo
         GameState("softwaremaximuminstabilitygs", Amanda(50, false), Ra9(99, false), "softwaremaximuminstabilitygs")
 
+      // Stays the same during software instability
+      softwareUnstableGS.changeGameState(DeltaRa9(0, false)) must be equalTo
+        GameState("softwareunstablegs", Amanda(50, false), Ra9(95, false), "softwareunstablegs")
+
+      // Decreases during software instability
+      softwareUnstableGS.changeGameState(DeltaRa9(-20, false)) must be equalTo
+        GameState("softwareunstablegs", Amanda(50, false), Ra9(75, false), "softwareunstablegs")
+
       // Becomes deviant
       neutralGS.changeGameState(DeltaRa9(0, true)) must be equalTo
         GameState("neutralgs", Amanda(50, false), Ra9(100, true), "neutralgs")

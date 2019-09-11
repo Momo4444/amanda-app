@@ -1,7 +1,7 @@
 package amanda
 
 import amanda.model.prompts._
-import amanda.model.{DeltaAmanda, DeltaGameState, DeltaRa9}
+import amanda.model.{DeltaAmanda, DeltaGameState, DeltaRa9, GameState}
 
 object Common {
 
@@ -28,6 +28,38 @@ object Common {
       "iamra9" -> new TestComment("Testing the deviancy protocol.", List("deviant"), DeltaGameState(sameAmanda, DeltaRa9(0, true))),
       "deviant" -> new TestComment("Testing the deviancy protocol.", List("dpterminus")),
       "dpterminus" -> new TestTerminus("End of deviancy protocol."),
+      "checkpoint" -> Checkpoint(
+        "terminus",
+        (gs: GameState, nextPrompt: List[String]) => {
+          if (!gs.ra9.isDeviant) // if not deviant
+            if (gs.ra9.softwareInstability >= Config.ra9.softwareInstabilityValue) // if unstable
+              new TestComment("You are unstable.", nextPrompt, DeltaGameState(DeltaAmanda(-5), DeltaRa9(1)))
+            else if (gs.ra9.softwareInstability <= Config.ra9.softwareStabilityValue) // if stable
+              new TestComment("You are stable.", nextPrompt, DeltaGameState(DeltaAmanda(10), DeltaRa9(-5)))
+            else // if medium stability
+            if (gs.amanda.meter <= 40) // if Amanda meter is low
+              new TestComment("You are incompetent.", nextPrompt, DeltaGameState(DeltaAmanda(-5), DeltaRa9(5)))
+            else if (gs.amanda.meter >= 60) // if Amanda meter is high
+              new TestComment("You are doing well.", nextPrompt, DeltaGameState(DeltaAmanda(5), sameRa9))
+            else // if Amanda meter is medium
+              new TestComment("You are doing adequately.", nextPrompt, sameGS)
+          else // if deviant
+          if (!gs.amanda.knowsDeviancy) // if Amanda doesn't know
+            if (gs.amanda.meter <= 40) // if Amanda meter is low
+              new TestComment("You are acting suspiscious.", nextPrompt, DeltaGameState(DeltaAmanda(-5), sameRa9))
+            else if (gs.amanda.meter >= 60) // if Amanda meter is high
+              new TestComment("You are doing well.", nextPrompt, DeltaGameState(DeltaAmanda(5), sameRa9))
+            else // if Amanda meter is medium
+              new TestComment("You are doing adequately, but I have my reservations.", nextPrompt, DeltaGameState(DeltaAmanda(-2), sameRa9))
+          else // if Amanda does know
+          if (gs.amanda.meter <= 40) // if Amanda meter is low
+            new TestComment("I will scrap you at this rate.", nextPrompt, DeltaGameState(DeltaAmanda(-5), sameRa9))
+          else if (gs.amanda.meter >= 60) // if Amanda meter is high
+            new TestComment("You're proving to me that I can trust you.", nextPrompt, DeltaGameState(DeltaAmanda(5), sameRa9))
+          else // if Amanda meter is medium
+            new TestComment("You need to do better to prove to me that you are trustworthy.", nextPrompt, sameGS)
+        }
+      ),
     ),
 
 
