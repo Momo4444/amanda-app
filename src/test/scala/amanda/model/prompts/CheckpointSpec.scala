@@ -70,17 +70,17 @@ class CheckpointSpec extends Specification {
 
     "choose the correct Response for a Question towards a non-deviant GameState" in {
       comment2.cycle(GameState("comment02", Amanda(50, false), Ra9(50, false), "")) must be equalTo
-        GameState("terminus", Amanda(55, false), Ra9(50, false), "softwareyes")
+        GameState("terminus", Amanda(55, false), Ra9(50, false), "checkpointq")
     }
 
     "choose the correct Response for a Question towards a deviant amanda doesn't know GameState" in {
       comment2.cycle(GameState("comment02", Amanda(50, false), Ra9(100, true), "")) must be equalTo
-        GameState("terminus", Amanda(35, false), Ra9(100, true), "suspisciousno")
+        GameState("terminus", Amanda(35, false), Ra9(100, true), "checkpointq")
     }
 
     "choose the correct Response for a Question towards a deviant amanda does know GameState" in {
       comment2.cycle(GameState("comment02", Amanda(50, true), Ra9(100, true), "")) must be equalTo
-        GameState("terminus", Amanda(0, true), Ra9(100, true), "disobeyyes")
+        GameState("terminus", Amanda(0, true), Ra9(100, true), "checkpointq")
     }
 
   }

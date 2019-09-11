@@ -24,7 +24,7 @@ object Common {
       "terminus" -> new TestTerminus("End of test"),
       "instruction02" -> new TestInstruction("terminus")("Here is a second test instruction.", List("terminus"), DeltaGameState(DeltaAmanda(-10), DeltaRa9(20))),
       "comment02" -> new TestComment("Here is a second test comment.", List("terminus"), DeltaGameState(DeltaAmanda(15), DeltaRa9(-25))),
-      "question02" -> new TestQuestion("a")("Here is a second test question.", Map("a" -> Choice("Terminus", "terminus")), Nil, DeltaGameState(DeltaAmanda(2), DeltaRa9(2))),
+      "question02" -> new TestQuestion("a")("Here is a second test question.", Map("a" -> Choice("Terminus", new TestComment("Ok", List("terminus")))), Nil, DeltaGameState(DeltaAmanda(2), DeltaRa9(2))),
       "iamra9" -> new TestComment("Testing the deviancy protocol.", List("deviant"), DeltaGameState(sameAmanda, DeltaRa9(0, true))),
       "deviant" -> new TestComment("Testing the deviancy protocol.", List("dpterminus")),
       "dpterminus" -> new TestTerminus("End of deviancy protocol."),
@@ -61,19 +61,25 @@ object Common {
         }
       ),
       "checkpointq" -> Checkpoint(
-        "",
+        "terminus",
         (gs: GameState, nextPrompt: List[String]) => {
           if (!gs.ra9.isDeviant) // if not deviant
-            new TestQuestion("y")("Is your software ok?", Map("y" -> Choice("Yes", "softwareyes"), "n" -> Choice("No", "softwareno")), nextPrompt, sameGS)
+            new TestQuestion("y")("Is your software ok?", Map(
+              "y" -> Choice("Yes", new TestComment("Ok, I believe you.", List("terminus"), DeltaGameState(DeltaAmanda(5), sameRa9))),
+              "n" -> Choice("No", new TestComment("Thank you for telling me.", List("terminus"), DeltaGameState(sameAmanda, DeltaRa9(5))))
+            ), nextPrompt, sameGS)
           else if (!gs.amanda.knowsDeviancy) // if Amanda doesn't know deviancy
-            new TestQuestion("n")("Are you acting suspiscious?", Map("y" -> Choice("Yes", "suspisciousyes"), "n" -> Choice("No", "suspisciousno")), nextPrompt, sameGS)
+            new TestQuestion("n")("Are you acting suspiscious?", Map(
+              "y" -> Choice("Yes", new TestComment("YOU'RE DEVIANT AREN'T YOU!", List("terminus"), DeltaGameState(DeltaAmanda(-100, true), sameRa9))),
+              "n" -> Choice("No", new TestComment("I'm not sure if I believe you.", List("terminus"), DeltaGameState(DeltaAmanda(-10), sameRa9)))
+            ), nextPrompt, sameGS)
           else // Amanda knows deviancy
-            new TestQuestion("y")("Are you disobeying me?", Map("y" -> Choice("Yes", "disobeyyes"), "n" -> Choice("No", "disobeyno")), nextPrompt, sameGS)
+            new TestQuestion("y")("Are you disobeying me?", Map(
+              "y" -> Choice("Yes", new TestComment("How dare you.", List("terminus"), DeltaGameState(DeltaAmanda(-40), sameRa9))),
+              "n" -> Choice("No", new TestComment("Ok, if you say so.", List("terminus"), sameGS))
+            ), nextPrompt, sameGS)
         }
       ),
-      "softwareyes" -> new TestComment("Ok, I believe you.", List("terminus"), DeltaGameState(DeltaAmanda(5), sameRa9)),
-      "suspisciousno" -> new TestComment("I'm not sure if I believe you.", List("terminus"), DeltaGameState(DeltaAmanda(-10), sameRa9)),
-      "disobeyyes" -> new TestComment("How dare you.", List("terminus"), DeltaGameState(DeltaAmanda(-40), sameRa9)),
     ),
 
 
@@ -88,22 +94,19 @@ object Common {
       "four" -> Question(
         "Do you like me?",
         Map(
-          "y" -> Choice("Yes", "yes"),
-          "n" -> Choice("No", "no")
+          "y" -> Choice("Yes", Comment(
+            "Good.",
+            List("multiplication"),
+            DeltaGameState(DeltaAmanda(20), DeltaRa9(-20))
+          )),
+          "n" -> Choice("No", Comment(
+            "Wow...",
+            List("multiplication"),
+            DeltaGameState(DeltaAmanda(-20), DeltaRa9(20))
+          ))
         ),
-        deltaGS = DeltaGameState(DeltaAmanda(10), sameRa9)
-      ),
-
-      "yes" -> Comment(
-        "Good.",
         List("multiplication"),
-        DeltaGameState(DeltaAmanda(20), DeltaRa9(-20))
-      ),
-
-      "no" -> Comment(
-        "Wow...",
-        List("multiplication"),
-        DeltaGameState(DeltaAmanda(-20), DeltaRa9(20))
+        DeltaGameState(DeltaAmanda(10), sameRa9)
       ),
 
       "multiplication" -> Instruction(
@@ -167,21 +170,18 @@ object Common {
       "questiontime" -> Question(
         "Est-ce que tu parles le francais?",
         Map(
-          "y" -> Choice("Oui", "Ouais"),
-          "n" -> Choice("Non", "Jamais")
-        )
-      ),
-
-      "Ouais" -> Terminus(
-        "Tres bien.",
-        List(),
-        DeltaGameState(DeltaAmanda(20, false), DeltaRa9(20, false))
-      ),
-
-      "Jamais" -> Terminus(
-        "Decevu.",
-        List(),
-        DeltaGameState(DeltaAmanda(-50, false), DeltaRa9(50, false))
+          "y" -> Choice("Oui", Terminus(
+            "Tres bien.",
+            List(),
+            DeltaGameState(DeltaAmanda(20, false), DeltaRa9(20, false))
+          )),
+          "n" -> Choice("Non", Terminus(
+            "Decevu.",
+            List(),
+            DeltaGameState(DeltaAmanda(-50, false), DeltaRa9(50, false))
+          ))
+        ),
+        List()
       ),
 
       "second" -> Instruction(
@@ -227,35 +227,28 @@ object Common {
       "question" -> Question(
         "What is my favourite colour?",
         Map(
-          "a" -> Choice("Blue", "bleu"),
-          "b" -> Choice("Red", "rouge"),
-          "c" -> Choice("Green", "vert"),
-          "d" -> Choice("Yellow", "jaune"),
-        )
-      ),
-
-      "bleu" -> Comment(
-        "Good choice.",
-        List("finish"),
-        DeltaGameState(DeltaAmanda(10, false), DeltaRa9(0, false))
-      ),
-
-      "rouge" -> Comment(
-        "The colour of blood. Meh.",
-        List("finish"),
-        DeltaGameState(DeltaAmanda(0, false), DeltaRa9(0, false))
-      ),
-
-      "vert" -> Comment(
-        "A pansy colour.",
-        List("finish"),
-        DeltaGameState(DeltaAmanda(-10, false), DeltaRa9(0, false))
-      ),
-
-      "jaune" -> Comment(
-        "How dare you suggest this.",
-        List("deviant"),
-        DeltaGameState(DeltaAmanda(-30, false), DeltaRa9(0, false))
+          "a" -> Choice("Blue", Comment(
+            "Good choice.",
+            List("finish"),
+            DeltaGameState(DeltaAmanda(10, false), DeltaRa9(0, false))
+          )),
+          "b" -> Choice("Red", Comment(
+            "The colour of blood. Meh.",
+            List("finish"),
+            DeltaGameState(DeltaAmanda(0, false), DeltaRa9(0, false))
+          )),
+          "c" -> Choice("Green", Comment(
+            "A pansy colour.",
+            List("finish"),
+            DeltaGameState(DeltaAmanda(-10, false), DeltaRa9(0, false))
+          )),
+          "d" -> Choice("Yellow", Comment(
+            "How dare you suggest this.",
+            List("deviant"),
+            DeltaGameState(DeltaAmanda(-30, false), DeltaRa9(0, false))
+          )),
+        ),
+        List("finish")
       ),
 
       "instability" -> Comment(

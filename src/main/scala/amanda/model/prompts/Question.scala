@@ -4,18 +4,18 @@ import amanda.Common._
 import amanda.Config
 import amanda.model.{DeltaGameState, GameState}
 
-case class Choice(description: String, promptKey: String)
+case class Choice(description: String, prompt: Prompt)
 
-case class Question(message: String, responses: Map[String, Choice], keywords: List[String] = Nil, deltaGS: DeltaGameState = sameGS) extends Prompt {
+case class Question(message: String, responses: Map[String, Choice], keywords: List[String], deltaGS: DeltaGameState = sameGS) extends Prompt {
 
   private implicit val promptList = Config.gameState.promptList
 
   override def cycle(gs: GameState): GameState = {
     print(gs)
     val response = inputLoop
-    val nextPromptKey = responses(response).promptKey
-    val newGS = gs.changeGameState(getPrompt(nextPromptKey).deltaGS).updatePromptKey(nextPromptKey)
-    deviencyProtocol(newGS, gs.oldPromptKey)
+    val nextPrompt = responses(response).prompt
+    val newGS = gs.changeGameState(nextPrompt.deltaGS)
+    nextPrompt.cycle(newGS)
   }
 
   override def print(gs: GameState): Unit = {
@@ -47,7 +47,7 @@ case class Question(message: String, responses: Map[String, Choice], keywords: L
 
 }
 
-class TestQuestion(mockedInput: String)(message: String, responses: Map[String, Choice], keywords: List[String] = Nil, deltaGS: DeltaGameState = sameGS)
+class TestQuestion(mockedInput: String)(message: String, responses: Map[String, Choice], keywords: List[String], deltaGS: DeltaGameState = sameGS)
   extends Question(message, responses, keywords, deltaGS) {
   override def readInput: String = mockedInput.toLowerCase()
 }
