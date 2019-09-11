@@ -1,7 +1,7 @@
 package amanda
 
 import amanda.model.{DeltaAmanda, DeltaGameState, DeltaRa9, GameState}
-import amanda.model.prompts.{Comment, Prompt, Checkpoint, Terminus}
+import amanda.model.prompts._
 import amanda.Common._
 import amanda.Config
 
@@ -12,7 +12,7 @@ object Checkpoints {
 
   val specialPrompts: Map[String, Prompt] = Map(
 
-    "start" -> Comment("Special prompts...", List("special1"), sameGS),
+    "start" -> Instruction("Special prompts...", List("special1", "special2"), sameGS),
 
     "special1" -> Checkpoint(
       "end",
@@ -46,6 +46,25 @@ object Checkpoints {
               Comment("You need to do better to prove to me that you are trustworthy.", nextPrompt, sameGS)
       }
     ),
+
+    "special2" -> Checkpoint(
+      "",
+      (gs: GameState, nextPrompt: List[String]) => {
+        if (!gs.ra9.isDeviant) // if not deviant
+          Question("Is your software ok?", Map("y" -> Choice("Yes", "softwareyes"), "n" -> Choice("No", "softwareno")), nextPrompt, sameGS)
+        else if (!gs.amanda.knowsDeviancy) // if Amanda doesn't know deviancy
+          Question("Are you acting suspiscious?", Map("y" -> Choice("Yes", "suspisciousyes"), "n" -> Choice("No", "suspisciousno")), nextPrompt, sameGS)
+        else // Amanda knows deviancy
+          Question("Are you disobeying me?", Map("y" -> Choice("Yes", "disobeyyes"), "n" -> Choice("No", "disobeyno")), nextPrompt, sameGS)
+      }
+    ),
+
+    "softwareyes" -> Comment("Ok, I believe you.", List("end"), DeltaGameState(DeltaAmanda(5), sameRa9)),
+    "softwareno" -> Comment("Thank you for telling me.", List("end"), DeltaGameState(sameAmanda, DeltaRa9(5))),
+    "suspisciousyes" -> Comment("YOU'RE DEVIANT AREN'T YOU!", List("end"), DeltaGameState(DeltaAmanda(-100, true), sameRa9)),
+    "suspisciousno" -> Comment("I'm not sure if I believe you.", List("end"), DeltaGameState(DeltaAmanda(-10), sameRa9)),
+    "disobeyyes" -> Comment("How dare you.", List("end"), DeltaGameState(DeltaAmanda(-40), sameRa9)),
+    "disobeyno" -> Comment("Ok, if you say so.", List("end"), sameGS),
 
     "end" -> Terminus(
       "End of special prompts..."
