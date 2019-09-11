@@ -2,6 +2,7 @@ package amanda
 
 import amanda.model.prompts._
 import amanda.model.{DeltaAmanda, DeltaGameState, DeltaRa9, GameState}
+import amanda.treasurehunt.{Beginning, Calibration, Ending}
 
 object Common {
 
@@ -12,9 +13,17 @@ object Common {
   val minusAmanda = -5
   val plusRa9 = 10
 
+  val treasurehunt: Map[String, Prompt] = Beginning.beginning ++ Calibration.calibration ++ Ending.ending
+
+  val modelNumber = Config.gameState.modelNumber
+  var chosenName = "Tima"
+  lazy val name = s"${chosenName}-${modelNumber}"
+
   def getPrompt(promptKey: String)(implicit promptList: String): Prompt = keyword2prompts(promptList)(promptKey)
 
   val keyword2prompts: Map[String, Map[String, Prompt]] = Map(
+
+    "treasurehunt" -> treasurehunt,
 
     "specialprompts" -> Checkpoints.specialPrompts,
 
