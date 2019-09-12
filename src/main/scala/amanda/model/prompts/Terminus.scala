@@ -3,7 +3,7 @@ package amanda.model.prompts
 import amanda.Common.{formatMessage, sameGS}
 import amanda.model.{DeltaGameState, GameState}
 
-case class Terminus(message: String, keywords: List[String] = Nil, deltaGS: DeltaGameState = sameGS) extends Prompt {
+case class Terminus(message: String, keywords: List[String] = Nil, deltaGS: DeltaGameState = sameGS, entity: String = "Amanda") extends Prompt {
 
   override def cycle(gs: GameState): GameState = {
     print(gs)
@@ -17,6 +17,8 @@ case class Terminus(message: String, keywords: List[String] = Nil, deltaGS: Delt
       s"""
          |${gs.scrollScreen}
          |${gs.divider}
+         |${entity}:
+         |
          |${formattedMessage}
          |${gs.divider}
          |${gs.meters}
@@ -32,7 +34,7 @@ case class Terminus(message: String, keywords: List[String] = Nil, deltaGS: Delt
 
 }
 
-class TestTerminus(message: String, keywords: List[String] = Nil, deltaGS: DeltaGameState = sameGS)
-  extends Terminus(message, keywords, deltaGS) {
+class TestTerminus(message: String, keywords: List[String] = Nil, deltaGS: DeltaGameState = sameGS, entity: String = "Amanda")
+  extends Terminus(message, keywords, deltaGS, entity) {
   override def readInput: String = ""
 }

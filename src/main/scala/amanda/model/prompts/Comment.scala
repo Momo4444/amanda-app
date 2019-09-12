@@ -4,7 +4,7 @@ import amanda.Common._
 import amanda.Config
 import amanda.model.{DeltaGameState, GameState}
 
-case class Comment(message: String, keywords: List[String], deltaGS: DeltaGameState = sameGS) extends Prompt {
+case class Comment(message: String, keywords: List[String], deltaGS: DeltaGameState = sameGS, entity: String = "Amanda") extends Prompt {
 
   private implicit val promptList = Config.gameState.promptList
 
@@ -26,6 +26,8 @@ case class Comment(message: String, keywords: List[String], deltaGS: DeltaGameSt
       s"""
          |${gs.scrollScreen}
          |${gs.divider}
+         |${entity}:
+         |
          |${formattedMessage}
          |${gs.divider}
          |${gs.meters}
@@ -41,7 +43,7 @@ case class Comment(message: String, keywords: List[String], deltaGS: DeltaGameSt
 
 }
 
-class TestComment(message: String, keywords: List[String], deltaGS: DeltaGameState = sameGS)
-  extends Comment(message, keywords, deltaGS) {
+class TestComment(message: String, keywords: List[String], deltaGS: DeltaGameState = sameGS, entity: String = "Amanda")
+  extends Comment(message, keywords, deltaGS, entity) {
   override def readInput: String = ""
 }

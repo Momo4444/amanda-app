@@ -4,7 +4,7 @@ import amanda.Common._
 import amanda.Config
 import amanda.model.{DeltaGameState, GameState}
 
-case class Instruction(message: String, keywords: List[String], deltaGS: DeltaGameState = sameGS) extends Prompt {
+case class Instruction(message: String, keywords: List[String], deltaGS: DeltaGameState = sameGS, entity: String = "Amanda") extends Prompt {
 
   private implicit val promptList = Config.gameState.promptList
   private val deviancyPrompt = Config.ra9.deviancyPrompt
@@ -24,6 +24,8 @@ case class Instruction(message: String, keywords: List[String], deltaGS: DeltaGa
       s"""
          |${gs.scrollScreen}
          |${gs.divider}
+         |${entity}:
+         |
          |${formattedMessage}
          |${gs.divider}
          |${gs.meters}
@@ -43,7 +45,7 @@ case class Instruction(message: String, keywords: List[String], deltaGS: DeltaGa
 
 }
 
-class TestInstruction(mockedInput: String)(message: String, keywords: List[String], deltaGameState: DeltaGameState = sameGS)
-  extends Instruction(message, keywords, deltaGameState) {
+class TestInstruction(mockedInput: String)(message: String, keywords: List[String], deltaGameState: DeltaGameState = sameGS, entity: String = "Amanda")
+  extends Instruction(message, keywords, deltaGameState, entity) {
   override def readInput: String = mockedInput.toLowerCase()
 }

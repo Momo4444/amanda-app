@@ -2,7 +2,7 @@ package amanda
 
 import amanda.model.prompts._
 import amanda.model.{DeltaAmanda, DeltaGameState, DeltaRa9, GameState}
-import amanda.treasurehunt.{Beginning, Calibration, Ending}
+import amanda.treasurehunt._
 
 object Common {
 
@@ -13,7 +13,8 @@ object Common {
   val minusAmanda = -5
   val plusRa9 = 10
 
-  val treasurehunt: Map[String, Prompt] = Beginning.beginning ++ Calibration.calibration ++ Ending.ending
+  val treasurehunt: Map[String, Prompt] = Beginning.beginning ++ Calibration.calibration ++ Mission.mission ++ Ending.ending ++
+    DeviancyProtocol.deviancyProtocol ++ AmandaKnowsProtocol.amandaKnowsProtocol ++ AmandaTrashesProtocol.amandaTrashesProtocol
 
   val modelNumber = Config.gameState.modelNumber
   var chosenName = "Tima"

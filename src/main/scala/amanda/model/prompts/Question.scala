@@ -6,7 +6,7 @@ import amanda.model.{DeltaGameState, GameState}
 
 case class Choice(description: String, prompt: Prompt)
 
-case class Question(message: String, responses: Map[String, Choice], deltaGS: DeltaGameState = sameGS) extends Prompt {
+case class Question(message: String, responses: Map[String, Choice], deltaGS: DeltaGameState = sameGS, entity: String = "Amanda") extends Prompt {
 
   private implicit val promptList = Config.gameState.promptList
 
@@ -30,6 +30,8 @@ case class Question(message: String, responses: Map[String, Choice], deltaGS: De
       s"""
          |${gs.scrollScreen}
          |${gs.divider}
+         |${entity}:
+         |
          |${formattedMessage}
          |${gs.divider}
          |${formattedResponses}
@@ -51,7 +53,7 @@ case class Question(message: String, responses: Map[String, Choice], deltaGS: De
 
 }
 
-class TestQuestion(mockedInput: String)(message: String, responses: Map[String, Choice], deltaGS: DeltaGameState = sameGS)
-  extends Question(message, responses, deltaGS) {
+class TestQuestion(mockedInput: String)(message: String, responses: Map[String, Choice], deltaGS: DeltaGameState = sameGS, entity: String = "Amanda")
+  extends Question(message, responses, deltaGS, entity) {
   override def readInput: String = mockedInput.toLowerCase()
 }
