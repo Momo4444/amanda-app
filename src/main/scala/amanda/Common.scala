@@ -31,6 +31,51 @@ object Common {
 
 
 
+    "deviancycheck" -> Map(
+      "start" -> Instruction("Write yes", List("yes")),
+      "yes" -> Comment("This is a comment", List("comment")),
+      "comment" -> Question("This is a question", Map("a" -> Choice("A", Comment("This is a comment response.", List("terminus"))))),
+      "terminus" -> Terminus("This is a terminus"),
+      "iamra9" -> Comment("You are deviant!", List("deviant"), DeltaGameState(sameAmanda, DeltaRa9(0, true))),
+      "deviant" -> Terminus("End of deviancy protocol.")
+    ),
+
+    "instructioncheck" -> Map(
+      "start" -> Instruction("Write AKP.", List("akp")),
+      "akp" -> Instruction("Write terminus.", List("terminus"), DeltaGameState(DeltaAmanda(-50), sameRa9)),
+      "terminus" -> Terminus("End"),
+      "compromised" -> Comment("Amanda knows.", List("comp2")),
+      "comp2" -> Comment("Changing GS", List("akpterminus"), DeltaGameState(DeltaAmanda(0, true), sameRa9)),
+      "akpterminus" -> Terminus("End of amanda knows protocol.", Nil, DeltaGameState(DeltaAmanda(30), sameRa9)),
+    ),
+
+    "commentcheck" -> Map(
+      "start" -> Comment("Comment AKP.", List("akp")),
+      "akp" -> Comment("Comment.", List("terminus"), DeltaGameState(DeltaAmanda(-50), sameRa9)),
+      "terminus" -> Terminus("End"),
+      "compromised" -> Comment("Amanda knows.", List("comp2")),
+      "comp2" -> Comment("Changing GS", List("akpterminus"), DeltaGameState(DeltaAmanda(0, true), sameRa9)),
+      "akpterminus" -> Terminus("End of amanda knows protocol.", Nil, DeltaGameState(DeltaAmanda(30), sameRa9)),
+    ),
+
+    "questioncheck" -> Map(
+      "start" -> Question("Which Prompt are you testing?", Map(
+        "a" -> Choice("Instruction", Instruction("This is the instruction trigger, write akp.", List("akp"), DeltaGameState(DeltaAmanda(-50), sameRa9))),
+        "b" -> Choice("Comment", Comment("This is the comment trigger.", List("akp"), DeltaGameState(DeltaAmanda(-50), sameRa9))),
+        "c" -> Choice("Question that triggers with comment", Question("This is the question trigger.", Map("a" -> Choice("A", Comment("AAA", List("akp")))), DeltaGameState(DeltaAmanda(-50), sameRa9))),
+        "d" -> Choice("Question that doesn't trigger with comment", Question("This is the question trigger.", Map("a" -> Choice("A", Comment("AAA", List("akp"), DeltaGameState(DeltaAmanda(1), sameRa9)))), DeltaGameState(DeltaAmanda(-50), sameRa9))),
+        "e" -> Choice("Question that triggers with instruction", Question("This is the question trigger.", Map("a" -> Choice("A", Instruction("type akp", List("akp")))), DeltaGameState(DeltaAmanda(-50), sameRa9))),
+        "f" -> Choice("Question that doesn't triggers with instruction", Question("This is the question trigger.", Map("a" -> Choice("A", Instruction("type akp", List("akp"), DeltaGameState(DeltaAmanda(1), sameRa9)))), DeltaGameState(DeltaAmanda(-50), sameRa9))),
+      )),
+      "akp" -> Comment("bah", List("terminus"), DeltaGameState(DeltaAmanda(1), sameRa9)),
+      "terminus" -> Terminus("End"),
+      "compromised" -> Comment("Amanda knows.", List("comp2")),
+      "comp2" -> Comment("Changing GS", List("akpterminus"), DeltaGameState(DeltaAmanda(0, true), sameRa9)),
+      "akpterminus" -> Terminus("End of amanda knows protocol.", Nil, DeltaGameState(DeltaAmanda(30), sameRa9)),
+    ),
+
+
+
     "amandaknows" -> Map(
       "start" -> Instruction("Are you deviant?", List("yes", "no")),
       "yes" -> Comment("I KNEW IT.", List("next"), DeltaGameState(DeltaAmanda(-100, false), sameRa9)),
