@@ -17,6 +17,8 @@ case class AmandaConfig(
                          maxValue: Int,
                          softwareStabilityIncrement: Int,
                          amandaDeviancyMultiplier: Double,
+                         amandaKnowsProtocolPrompt: String,
+                         amandaTrashesProtocolPrompt: String,
                        )
 
 case class Ra9Config(

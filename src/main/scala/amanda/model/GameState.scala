@@ -18,6 +18,8 @@ case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9, oldPromptKey: 
   private val softwareStabilityValue = Config.ra9.softwareStabilityValue
   private val softwareStabilityIncrement = Config.amanda.softwareStabilityIncrement
   private val deviancyProtocolPrompt = Config.ra9.deviancyProtocolPrompt
+  private val amandaKnowsProtocolPrompt = Config.amanda.amandaKnowsProtocolPrompt
+  private val amandaTrashesProtocolPrompt = Config.amanda.amandaTrashesProtocolPrompt
 
   private implicit val promptList = Config.gameState.promptList
 
@@ -75,6 +77,10 @@ case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9, oldPromptKey: 
   val scrollScreen = "\n" * scrollScreenValue
 
   def runDeviancyProtocol: GameState = getPrompt(deviancyProtocolPrompt).cycle(this)
+
+  def runAmandaKnowsProtocol: GameState = getPrompt(amandaKnowsProtocolPrompt).cycle(this)
+
+  def runAmandaTrashesProtocol: GameState = getPrompt(amandaTrashesProtocolPrompt).cycle(this)
 
 }
 

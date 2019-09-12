@@ -25,7 +25,21 @@ object Common {
 
     "treasurehunt" -> treasurehunt,
 
+
+
     "specialprompts" -> Checkpoints.specialPrompts,
+
+
+
+    "amandaknows" -> Map(
+      "start" -> Instruction("Are you deviant?", List("yes", "no")),
+      "yes" -> Comment("I KNEW IT.", List("next"), DeltaGameState(DeltaAmanda(0, true), sameRa9)),
+      "no" -> Comment("Good.", List("next")),
+      "next" -> Comment("Do this for me.", List("end")),
+      "end" -> Terminus("Thank you."),
+      "compromised" -> Comment("You are deviant. I know this now.", List("comp2")),
+      "comp2" -> Terminus("You can still help me.", Nil, DeltaGameState(DeltaAmanda(30), sameRa9))
+    ),
 
 
 

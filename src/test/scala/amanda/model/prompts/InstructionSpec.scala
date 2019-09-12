@@ -29,8 +29,8 @@ class InstructionSpec extends Specification {
     "cycle a GameState through the Deviancy Protocol" in {
 
       val instruction2 = new TestInstruction(deviancyPrompt)("Here is a second test instruction.", List("terminus"), DeltaGameState(DeltaAmanda(-10), DeltaRa9(20)))
-      instruction2.deviencyProtocol(GameState("instruction02", Amanda(50, false), Ra9(50, false), "instruction01"), "instruction02") must be equalTo
-        GameState("terminus", Amanda(50, false), Ra9(50, false), "instruction02")
+      instruction2.deviancyProtocol(GameState("instruction02", Amanda(50, false), Ra9(50, false), "instruction01"), "instruction02") must be equalTo
+        GameState("instruction02", Amanda(50, false), Ra9(50, false), "instruction01")
 
     }
 
@@ -38,7 +38,7 @@ class InstructionSpec extends Specification {
 
       val instruction2 = new TestInstruction(deviancyPrompt)("Here is a second test instruction.", List("terminus"), DeltaGameState(DeltaAmanda(-10), DeltaRa9(20)))
       instruction2.cycle(GameState("instruction02", Amanda(50, false), Ra9(50, false), "instruction 01")) must be equalTo
-        GameState("terminus", Amanda(50, false), Ra9(100, true), "dpterminus")
+        GameState("terminus", Amanda(50, false), Ra9(100, true), "instruction02")
 
     }
 

@@ -16,13 +16,28 @@ trait Prompt {
 
   def cycle(gameState: GameState): GameState
 
-  def deviencyProtocol(gs: GameState, oldPromptKey: String): GameState = {
+  def deviancyProtocol(gs: GameState, oldPromptKey: String): GameState = {
     if (deltaGS.deltaRa9.deltaIsDeviant) {
       Prompt.deviencyProtocolTriggered = true
       val postDeviancyProtocolGS = gs.runDeviancyProtocol // if turning deviant, run the Deviancy Protocol
-      getPrompt(oldPromptKey).cycle(postDeviancyProtocolGS) // before returning to the old Prompt
+      postDeviancyProtocolGS.updatePromptKey(oldPromptKey) // before returning the GameState
     }
-    else gs.prompt.cycle(gs) // otherwise cycle into the next Prompt
+    else gs // otherwise return the original GameState
+  }
+
+  def amandaKnowsProtocol(gs: GameState, newPromptKey: String): GameState = {
+    if (deltaGS.deltaAmanda.deltaKnowsDeviancy || (deltaGS.deltaRa9.deltaIsDeviant && (gs.amanda.meter + deltaGS.deltaAmanda.deltaMeter <= 0))) {
+      if (!Prompt.amandaKnowsProtocolTriggered) { // if this is the first time
+        Prompt.amandaKnowsProtocolTriggered = true
+        val postAmandaKnowsProtocolGS = gs.runAmandaKnowsProtocol // if Amanda finds out, run the Amanda Knows Protocol
+        postAmandaKnowsProtocolGS.updatePromptKey(newPromptKey) // before returning the GameState
+      }
+      else {
+        val postAmandaTrashesProtocolGS = gs.runAmandaTrashesProtocol // if Amanda tries to trash, run the Amanda Trashes Protocol
+        postAmandaTrashesProtocolGS.updatePromptKey(newPromptKey) // before returning the GameState
+      }
+    }
+    else gs // otherwise return the original GameState
   }
 
   def print(gameState: GameState): Unit
@@ -35,6 +50,7 @@ trait Prompt {
 object Prompt {
 
   var deviencyProtocolTriggered: Boolean = false
+  var amandaKnowsProtocolTriggered: Boolean = false
 
   def checkInput(input: String, keywords: List[String]): Boolean = {
     keywords.contains(input)

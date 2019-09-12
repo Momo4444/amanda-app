@@ -13,7 +13,9 @@ case class Comment(message: String, keywords: List[String], deltaGS: DeltaGameSt
     inputLoop
     val nextPromptKey = keywords.head
     val newGS = gs.changeGameState(getPrompt(nextPromptKey).deltaGS).updatePromptKey(nextPromptKey)
-    deviencyProtocol(newGS, gs.oldPromptKey)
+    val postDeviancyProtocolGS = deviancyProtocol(newGS, gs.oldPromptKey)
+    val postAmandaKnowsProtocolGS = amandaKnowsProtocol(postDeviancyProtocolGS, nextPromptKey)
+    postAmandaKnowsProtocolGS.prompt.cycle(postAmandaKnowsProtocolGS)
   }
 
   override def print(gs: GameState): Unit = {
