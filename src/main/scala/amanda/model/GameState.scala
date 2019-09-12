@@ -29,8 +29,8 @@ case class GameState(promptKey: String, amanda: Amanda, ra9: Ra9, oldPromptKey: 
     val deltaRa9 = deltaGS.deltaRa9
 
     val newDeltaAmanda: DeltaAmanda =
-      if (this.amanda.knowsDeviancy || deltaAmanda.deltaKnowsDeviancy)
-        DeltaAmanda(amandaMaxValue * (-1), true) // if Amanda knows deviancy, set Amanda meter to min value
+      if (deltaAmanda.deltaKnowsDeviancy)
+        DeltaAmanda(amandaMaxValue * (-1), true) // if Amanda finds out deviancy, set Amanda meter to min value
       else if (this.ra9.softwareInstability + deltaRa9.deltaSoftwareInstability <= softwareStabilityValue)
         DeltaAmanda(deltaAmanda.deltaMeter + softwareStabilityIncrement, deltaAmanda.deltaKnowsDeviancy) // if software is stable enough, increment Amanda meter
       else if (this.ra9.isDeviant && deltaAmanda.deltaMeter < 0)

@@ -12,10 +12,10 @@ case class Instruction(message: String, keywords: List[String], deltaGS: DeltaGa
   override def cycle(gs: GameState): GameState = {
     print(gs)
     val nextPromptKey = inputLoop
-    val newGS = gs.changeGameState(getPrompt(nextPromptKey).deltaGS).updatePromptKey(nextPromptKey)
-    val postDeviancyProtocolGS = deviancyProtocol(newGS, gs.oldPromptKey)
+    val postDeviancyProtocolGS = deviancyProtocol(gs, gs.oldPromptKey)
     val postAmandaKnowsProtocolGS = amandaKnowsProtocol(postDeviancyProtocolGS, nextPromptKey)
-    postAmandaKnowsProtocolGS.prompt.cycle(postAmandaKnowsProtocolGS)
+    val newGS = postAmandaKnowsProtocolGS.changeGameState(getPrompt(nextPromptKey).deltaGS).updatePromptKey(nextPromptKey)
+    newGS.prompt.cycle(newGS)
   }
 
   override def print(gs: GameState): Unit = {

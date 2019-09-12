@@ -12,10 +12,12 @@ case class Comment(message: String, keywords: List[String], deltaGS: DeltaGameSt
     print(gs)
     inputLoop
     val nextPromptKey = keywords.head
-    val newGS = gs.changeGameState(getPrompt(nextPromptKey).deltaGS).updatePromptKey(nextPromptKey)
-    val postDeviancyProtocolGS = deviancyProtocol(newGS, gs.oldPromptKey)
+    val preProtocolGS = gs.changeGameState(getPrompt(nextPromptKey).deltaGS).updatePromptKey(nextPromptKey)
+    val postDeviancyProtocolGS = deviancyProtocol(preProtocolGS, gs.oldPromptKey)
     val postAmandaKnowsProtocolGS = amandaKnowsProtocol(postDeviancyProtocolGS, nextPromptKey)
     postAmandaKnowsProtocolGS.prompt.cycle(postAmandaKnowsProtocolGS)
+    //    val newGS = postAmandaKnowsProtocolGS.changeGameState(getPrompt(nextPromptKey).deltaGS).updatePromptKey(nextPromptKey)
+    //    newGS.prompt.cycle(newGS)
   }
 
   override def print(gs: GameState): Unit = {

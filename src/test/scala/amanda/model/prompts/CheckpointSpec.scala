@@ -53,17 +53,17 @@ class CheckpointSpec extends Specification {
 
     "choose the correct Prompt for a deviant amanda does know low amanda GameState" in {
       comment1.cycle(GameState("comment01", Amanda(30, true), Ra9(100, true), "")) must be equalTo
-        GameState("terminus", Amanda(0, true), Ra9(100, true), "checkpoint")
+        GameState("terminus", Amanda(23, true), Ra9(100, true), "checkpoint")
     }
 
     "choose the correct Prompt for a deviant amanda does know high amanda GameState" in {
       comment1.cycle(GameState("comment01", Amanda(70, true), Ra9(100, true), "")) must be equalTo
-        GameState("terminus", Amanda(0, true), Ra9(100, true), "checkpoint")
+        GameState("terminus", Amanda(75, true), Ra9(100, true), "checkpoint")
     }
 
     "choose the correct Prompt for a deviant amanda does know medium amanda GameState" in {
       comment1.cycle(GameState("comment01", Amanda(50, true), Ra9(100, true), "")) must be equalTo
-        GameState("terminus", Amanda(0, true), Ra9(100, true), "checkpoint")
+        GameState("terminus", Amanda(50, true), Ra9(100, true), "checkpoint")
     }
 
 
@@ -80,7 +80,7 @@ class CheckpointSpec extends Specification {
 
     "choose the correct Response for a Question towards a deviant amanda does know GameState" in {
       comment2.cycle(GameState("comment02", Amanda(50, true), Ra9(100, true), "")) must be equalTo
-        GameState("terminus", Amanda(0, true), Ra9(100, true), "checkpointq")
+        GameState("terminus", Amanda(5, true), Ra9(100, true), "checkpointq")
     }
 
   }

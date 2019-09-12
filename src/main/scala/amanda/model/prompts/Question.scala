@@ -34,6 +34,8 @@ case class Question(message: String, responses: Map[String, Choice], deltaGS: De
          |${gs.divider}
          |${formattedResponses}
          |${gs.divider}
+         |${gs.meters}
+         |${gs.divider}
        """.stripMargin
     )
   }

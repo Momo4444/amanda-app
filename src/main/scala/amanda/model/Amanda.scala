@@ -7,8 +7,6 @@ case class Amanda(meter: Int, knowsDeviancy: Boolean) {
   private val minValue = Config.amanda.minValue
   private val maxValue = Config.amanda.maxValue
 
-//  def foundDeviancy(): Amanda = Amanda(0, true)
-
   def updateAmanda(deltaAmanda: DeltaAmanda): Amanda = this.updateMeter(deltaAmanda.deltaMeter).updateKnowsDeviancy(deltaAmanda.deltaKnowsDeviancy)
 
   def updateAmanda(deltaMeter: Int): Amanda = updateAmanda(DeltaAmanda(deltaMeter))

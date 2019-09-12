@@ -46,9 +46,9 @@ class GameStateSpec extends Specification {
       softwareStableGS.changeGameState() must be equalTo
         GameState("softwarestablegs", Amanda(55, false), Ra9(0, false), "softwarestablegs")
 
-      // Once knows deviancy, knowledge is retained
+      // Once knows deviancy, knowledge is retained, but meter can still increase
       knowsDeviancyGS.changeGameState(DeltaAmanda(20, false)) must be equalTo
-        GameState("knowsdeviancygs", Amanda(0, true), Ra9(100, true), "knowsdeviancygs")
+        GameState("knowsdeviancygs", Amanda(20, true), Ra9(100, true), "knowsdeviancygs")
 
       // Still finds out about deviancy when via meter and boolean
       deviantGS.changeGameState(DeltaAmanda(-60, true)) must be equalTo

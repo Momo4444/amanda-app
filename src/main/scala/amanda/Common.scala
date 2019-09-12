@@ -33,12 +33,16 @@ object Common {
 
     "amandaknows" -> Map(
       "start" -> Instruction("Are you deviant?", List("yes", "no")),
-      "yes" -> Comment("I KNEW IT.", List("next"), DeltaGameState(DeltaAmanda(0, true), sameRa9)),
+      "yes" -> Comment("I KNEW IT.", List("next"), DeltaGameState(DeltaAmanda(-100, false), sameRa9)),
       "no" -> Comment("Good.", List("next")),
-      "next" -> Comment("Do this for me.", List("end")),
+      "next" -> Instruction("Do this for me.", List("second", "end")),
+      "second" -> Instruction("Are you deviant (2nd time)?", List("yes", "no")),
       "end" -> Terminus("Thank you."),
       "compromised" -> Comment("You are deviant. I know this now.", List("comp2")),
-      "comp2" -> Terminus("You can still help me.", Nil, DeltaGameState(DeltaAmanda(30), sameRa9))
+      "comp2" -> Terminus("You can still help me.", Nil, DeltaGameState(DeltaAmanda(30), sameRa9)),
+      "inadequate" -> Comment("You are so inadequate.", List("inad2")),
+      "inad2" -> Comment("Ra9 will save you!", List("inad3")),
+      "inad3" -> Terminus("Fine, I will trust you again...", List(""), DeltaGameState(DeltaAmanda(30),sameRa9)),
     ),
 
 
@@ -98,7 +102,7 @@ object Common {
             ), sameGS)
           else // Amanda knows deviancy
             new TestQuestion("y")("Are you disobeying me?", Map(
-              "y" -> Choice("Yes", new TestComment("How dare you.", nextPrompt, DeltaGameState(DeltaAmanda(-40), sameRa9))),
+              "y" -> Choice("Yes", new TestComment("How dare you.", nextPrompt, DeltaGameState(DeltaAmanda(-30), sameRa9))),
               "n" -> Choice("No", new TestComment("Ok, if you say so.", nextPrompt, sameGS))
             ), sameGS)
         }
