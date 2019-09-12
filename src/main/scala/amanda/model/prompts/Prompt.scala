@@ -18,8 +18,8 @@ trait Prompt {
   def cycle(gameState: GameState): GameState
 
   def deviancyProtocol(gs: GameState, oldPromptKey: String): GameState = {
-    if (!Prompt.deviencyProtocolTriggered && deltaGS.deltaRa9.deltaIsDeviant) {
-      Prompt.deviencyProtocolTriggered = true
+    if (!Prompt.deviancyProtocolTriggered && deltaGS.deltaRa9.deltaIsDeviant) {
+      Prompt.deviancyProtocolTriggered = true
       val postDeviancyProtocolGS = gs.runDeviancyProtocol // if turning deviant, run the Deviancy Protocol
       postDeviancyProtocolGS.updatePromptKey(oldPromptKey) // before returning the GameState
     }
@@ -51,7 +51,7 @@ trait Prompt {
 
 object Prompt {
 
-  var deviencyProtocolTriggered: Boolean = false
+  var deviancyProtocolTriggered: Boolean = false
   var amandaKnowsProtocolTriggered: Boolean = false
 
   def checkInput(input: String, keywords: List[String]): Boolean = {

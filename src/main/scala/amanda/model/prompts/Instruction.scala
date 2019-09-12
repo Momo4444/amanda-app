@@ -33,7 +33,7 @@ case class Instruction(message: String, keywords: List[String], deltaGS: DeltaGa
 
   override def inputLoop: String = {
     val input = readInput
-    val allKeywords = if (!Prompt.deviencyProtocolTriggered) deviancyPrompt :: keywords else keywords
+    val allKeywords = if (!Prompt.deviancyProtocolTriggered) deviancyPrompt :: keywords else keywords
     if (Prompt.checkInput(input, allKeywords)) input
     else {
       println("That is not the correct answer. Try again.")

@@ -17,6 +17,26 @@ class CommentSpec extends Specification {
 
     }
 
+    "trigger the Amanda Knows Protocol when the Amanda meter reaches zero" in {
+      success
+    }
+
+    "trigger the Amanda Knows Protocol when the Amanda Knows Deviancy boolean is true" in {
+      success
+    }
+
+    "cycle a GameState through the Amanda Knows Protocol" in {
+      success
+    }
+
+    "trigger the Amanda Trashes Protocol when the Amanda Knows Protocol gets called a second time" in {
+      success
+    }
+
+    "cycle a GameState through the Amanda Trashes Protocol" in {
+      success
+    }
+
   }
 
 }

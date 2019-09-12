@@ -36,10 +36,39 @@ class InstructionSpec extends Specification {
 
     "trigger the Deviancy Protocol when the Deviancy Prompt is inputted" in {
 
+      Prompt.deviancyProtocolTriggered = false
       val instruction2 = new TestInstruction(deviancyPrompt)("Here is a second test instruction.", List("terminus"), DeltaGameState(DeltaAmanda(-10), DeltaRa9(20)))
       instruction2.cycle(GameState("instruction02", Amanda(50, false), Ra9(50, false), "instruction 01")) must be equalTo
         GameState("terminus", Amanda(50, false), Ra9(100, true), "instruction02")
 
+    }
+
+    "cycle a GameState through the Amanda Knows Protocol" in {
+      Prompt.amandaKnowsProtocolTriggered = false
+      val instruction1 = new TestInstruction("instruction02")("Amanda will find out your deviancy in the next instruction.", List("instruction02"), sameGS)
+      instruction1.cycle(GameState("instruction01", Amanda(5, false), Ra9(100, true), "")) must be equalTo
+        GameState("terminus", Amanda(30, true), Ra9(100, true), "terminus")
+    }
+
+    "trigger the Amanda Knows Protocol when the Amanda meter reaches zero" in {
+      Prompt.amandaKnowsProtocolTriggered = false
+      val instruction1 = new TestInstruction("instruction02")("Amanda will find out your deviancy in the next instruction.", List("instruction02"), sameGS)
+      instruction1.amandaKnowsProtocol(GameState("instruction01", Amanda(0, false), Ra9(100, true), ""), "instruction02") must be equalTo
+        GameState("instruction02", Amanda(30, true), Ra9(100, true), "comp2")
+    }
+
+    "cycle a GameState through the Amanda Trashes Protocol" in {
+      Prompt.amandaKnowsProtocolTriggered = true
+      val instruction1 = new TestInstruction("instruction02")("Amanda will trash you in the next instruction.", List("instruction02"), sameGS)
+      instruction1.cycle(GameState("instruction01", Amanda(5, true), Ra9(100, true), "")) must be equalTo
+        GameState("terminus", Amanda(20, true), Ra9(100, true), "terminus")
+    }
+
+    "trigger the Amanda Trashes Protocol when the Amanda Knows Protocol gets called a second time" in {
+      Prompt.amandaKnowsProtocolTriggered = true
+      val instruction1 = new TestInstruction("instruction02")("Amanda will trash you in the next instruction.", List("instruction02"), DeltaGameState(DeltaAmanda(-10), sameRa9))
+      instruction1.amandaKnowsProtocol(GameState("instruction01", Amanda(0, true), Ra9(100, true), ""), "instruction02") must be equalTo
+        GameState("instruction02", Amanda(20, true), Ra9(100, true), "instruction01")
     }
 
   }

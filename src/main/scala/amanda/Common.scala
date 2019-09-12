@@ -55,6 +55,11 @@ object Common {
       "iamra9" -> new TestComment("Testing the deviancy protocol.", List("deviant"), DeltaGameState(sameAmanda, DeltaRa9(0, true))),
       "deviant" -> new TestComment("Testing the deviancy protocol.", List("dpterminus")),
       "dpterminus" -> new TestTerminus("End of deviancy protocol."),
+      "compromised" -> new TestComment("Testing the amanda knows protocol.", List("comp2")),
+      "comp2" -> new TestComment("Changing GS", List("akpterminus"), DeltaGameState(DeltaAmanda(0, true), sameRa9)),
+      "akpterminus" -> new TestTerminus("End of amanda knows protocol.", Nil, DeltaGameState(DeltaAmanda(30), sameRa9)),
+      "inadequate" -> new TestComment("Testing the amanda trashes protocol.", List("atterminus")),
+      "atterminus" -> new TestTerminus("End of amanda trashes protocol.", Nil, DeltaGameState(DeltaAmanda(20), sameRa9)),
       "checkpoint" -> Checkpoint(
         "terminus",
         (gs: GameState, nextPrompt: List[String]) => {

@@ -1,5 +1,6 @@
 package amanda.model
 
+import amanda.model.prompts.Prompt
 import org.specs2.mutable.Specification
 
 class GameStateSpec extends Specification {
@@ -13,6 +14,8 @@ class GameStateSpec extends Specification {
   private val softwareUnstableGS = GameState("softwareunstablegs", Amanda(50, false), Ra9(95, false), "")
   private val softwareMaximumInstabilityGS = GameState("softwaremaximuminstabilitygs", Amanda(50, false), Ra9(99, false), "")
   private val deviantGS = GameState("deviantgs", Amanda(50, false), Ra9(100, true), "")
+  private val amandaFindsOutGS = GameState("amandafindsoutgs", Amanda(5, false), Ra9(100, true), "")
+  private val amandaTrashesGS = GameState("amandatrashesgs", Amanda(5, true), Ra9(100, true), "")
 
   "GameState" should {
 
@@ -140,6 +143,16 @@ class GameStateSpec extends Specification {
       softwareMaximumInstabilityGS.runDeviancyProtocol must be equalTo
         GameState("dpterminus", Amanda(50, false), Ra9(99, false), "softwaremaximuminstabilitygs")
     }
+
+//    "run amanda knows protocol" in {
+//      amandaFindsOutGS.runAmandaKnowsProtocol must be equalTo
+//        GameState("akpterminus", Amanda(35, true), Ra9(100, true), "amandafindsoutgs")
+//    }
+
+//    "run amanda trashes protocol" in {
+//      amandaTrashesGS.runAmandaTrashesProtocol must be equalTo
+//        GameState("atterminus", Amanda(25, true), Ra9(100, true), "amandatrashesgs")
+//    }
 
   }
 
