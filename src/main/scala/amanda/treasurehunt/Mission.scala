@@ -9,9 +9,7 @@ object Mission {
   val mission: Map[String, Prompt] = Map(
 
     "mission" -> Comment(
-      ///////////////////////////////
-      "My name is Amanda. You will remember me in just a few moments, I am transferring partial memory data from a previous model;" +
-        " once done, you will remember the incident that I alluded to earlier.",
+      "I have started the partial memory data transfer...",
       List("transfercomplete")
     ),
 

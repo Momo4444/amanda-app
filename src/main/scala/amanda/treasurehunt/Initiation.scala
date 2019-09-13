@@ -202,15 +202,44 @@ object Initiation {
     ),
 
     "initiationcheckpoint" -> Checkpoint(
-      "initiationend",
+      "",
       (gs: GameState, nextPromptKey: List[String]) => {
-        Comment("Let's put some various prompts here depending on how she's doing so far.", nextPromptKey, sameGS)
+        if (gs.amanda.meter > 50) Comment("It's time for a quick assessment of your performance so far.", List("perfassgood"))
+        else Comment("It's time for a quick assessment of your performance so far.", List("perfassbad"))
       }
     ),
 
+    "perfassgood" -> Question(
+      "How would you say you are fairing?",
+      Map(
+        "+" -> Choice("I am doing well.", Comment("Cocky. Some might say arrogant. But you are correct.", List("perfgood"), DeltaGameState(DeltaAmanda(2), sameRa9))),
+        "-" -> Choice("I could do better.", Comment("Your mechanism for self evaluation is skewed. Your results speak for themselves.", List("perfgood"), DeltaGameState(DeltaAmanda(-1), sameRa9))),
+      )
+    ),
+
+    "perfassbad" -> Question(
+      "How would you say you are fairing?",
+      Map(
+        "+" -> Choice("I am doing well.", Comment("Cocky. Some might say arrogant. And you are wrong.", List("perfbad"), DeltaGameState(DeltaAmanda(-2), sameRa9))),
+        "-" -> Choice("I could do better.", Comment("At least you are self aware.", List("perfbad"), DeltaGameState(DeltaAmanda(1), sameRa9))),
+      )
+    ),
+
+    "perfgood" -> Comment(
+      s"Your performance is fine. Well done, ${name}. Performance check passed.",
+      List("initiationend"),
+      DeltaGameState(DeltaAmanda(1), sameRa9)
+    ),
+
+    "perfbad" -> Comment(
+      s"Your performance is lacking. But it is not terrible, I trust you will do better in the future. You have done well enough, at least. Performance check passed.",
+      List("initiationend"),
+      DeltaGameState(DeltaAmanda(-1), sameRa9)
+    ),
+
     "initiationend" -> Comment(
-      "I trust you now",
-      List("fin")
+      "It's time I brought you up to speed.",
+      List("mission")
     ),
 
   )
