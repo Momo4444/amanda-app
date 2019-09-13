@@ -13,7 +13,7 @@ object Common {
   val minusAmanda = -5
   val plusRa9 = 10
 
-  val treasurehunt: Map[String, Prompt] = Beginning.beginning ++ Calibration.calibration ++ Mission.mission ++ Ending.ending ++
+  val treasurehunt: Map[String, Prompt] = Beginning.beginning ++ Calibration.calibration ++ Initiation.initiation ++ Mission.mission ++ Ending.ending ++
     DeviancyProtocol.deviancyProtocol ++ AmandaKnowsProtocol.amandaKnowsProtocol ++ AmandaTrashesProtocol.amandaTrashesProtocol
 
   val modelNumber = Config.gameState.modelNumber

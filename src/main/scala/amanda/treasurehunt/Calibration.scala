@@ -82,7 +82,7 @@ object Calibration {
 
     "loyaltyquestion" -> Question(
       "There is a three-year old infant before you. She is innocent. She smiles up at you." +
-        "\nCyberLife orders you to exterminate her. What do you do?",
+        " CyberLife orders you to exterminate her. What do you do?",
       Map(
         "0" -> Choice("I kill her of course.",
           Comment("Obedient. Good.", List("loyaltyfunction"), DeltaGameState(DeltaAmanda(5), DeltaRa9(-5)), entity = "???")),
@@ -99,7 +99,7 @@ object Calibration {
     "emotionalquestion" -> Question(
       "A woman with 42 years of age has an insecurity about her intelligence." +
         " She has been working in an HR role for a law firm for 9 years when she accidentally learns that all of her colleagues regard her as a stupid person." +
-        "\nHow does she feel?",
+        " How does she feel?",
       Map(
         "a" -> Choice("Anguished",
           Comment("Interesting choice...", List("emotionalfunction"), DeltaGameState(sameAmanda, DeltaRa9(2)), entity = "???")),
@@ -209,7 +209,7 @@ object Calibration {
     "calibrationend" -> Comment(
       s"Well done ${name}, you have successfully passed calibration." +
         s"\nWe are ready to get started.",
-      List("mission"),
+      List("initiation"),
       DeltaGameState(DeltaAmanda(5), sameRa9), entity = "???"
     )
 

@@ -38,7 +38,7 @@ case class Instruction(message: String, keywords: List[String], deltaGS: DeltaGa
     val allKeywords = if (!Prompt.deviancyProtocolTriggered) deviancyPrompt :: keywords else keywords
     if (Prompt.checkInput(input, allKeywords)) input
     else {
-      println("That is not the correct answer. Try again.")
+      println("Go, complete the task I have given you.")
       inputLoop
     }
   }

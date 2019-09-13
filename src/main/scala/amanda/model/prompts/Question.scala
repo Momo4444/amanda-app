@@ -46,7 +46,7 @@ case class Question(message: String, responses: Map[String, Choice], deltaGS: De
     val input = readInput
     if (Prompt.checkInput(input, responses.keys.toList)) input
     else {
-      println("That is not a valid answer, try again.")
+      println("That is not a valid answer.")
       inputLoop
     }
   }
