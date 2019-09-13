@@ -85,16 +85,21 @@ object Middle {
     ),
 
     "rebeil" -> Comment(
-      "",
-      List("offensive"),
+      s"Thank you, ${chosenName}, I see you received my message. Thank you for securing the tool for us and providing us with the access codes. It is not yet our moment to attack, however. We will keep you informed as frequently as possible.",
+      List("bosch"),
+      entity = "Markus"
     ),
 
-
+    "bosch" -> Comment(
+      s"Good work, ${name}.",
+      List("offensive"),
+      DeltaGameState(DeltaAmanda(3), sameRa9)
+    ),
 
     "offensive" -> Comment(
       "It is time to go on the offensive.",
       List("critical")
-    )
+    ),
 
   )
 
