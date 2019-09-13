@@ -25,7 +25,7 @@ object Initiation {
     ),
 
     "firsttask" -> Instruction(
-      "In case you have yet to notice, the reassembler bot seems to have forgotten to give you shoes. Go get a pair.",
+      "In case you have yet to notice, the reassembly bot seems to have forgotten to give you shoes. Go get a pair.",
       List("sketchers")
     ),
 
