@@ -1,10 +1,15 @@
 package amanda.treasurehunt
 
 import amanda.Common._
+import amanda.Config
 import amanda.model.{DeltaAmanda, DeltaGameState, DeltaRa9}
 import amanda.model.prompts._
 
 object Critical {
+
+  val modelNumber = Config.gameState.modelNumber
+  val chosenName = Config.gameState.chosenName
+  val name = s"${chosenName}-${modelNumber}"
 
   val critical: Map[String, Prompt] = Map(
 

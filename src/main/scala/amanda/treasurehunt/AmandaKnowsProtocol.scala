@@ -1,8 +1,13 @@
 package amanda.treasurehunt
 
+import amanda.Config
 import amanda.model.prompts.{Comment, Prompt}
 
 object AmandaKnowsProtocol {
+
+  val modelNumber = Config.gameState.modelNumber
+  val chosenName = Config.gameState.chosenName
+  val name = s"${chosenName}-${modelNumber}"
 
   val amandaKnowsProtocol: Map[String, Prompt] = Map(
 

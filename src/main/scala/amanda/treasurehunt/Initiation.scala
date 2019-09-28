@@ -1,10 +1,15 @@
 package amanda.treasurehunt
 
 import amanda.Common._
+import amanda.Config
 import amanda.model.{DeltaAmanda, DeltaGameState, DeltaRa9, GameState}
 import amanda.model.prompts._
 
 object Initiation {
+
+  val modelNumber = Config.gameState.modelNumber
+  val chosenName = Config.gameState.chosenName
+  val name = s"${chosenName}-${modelNumber}"
 
   val initiation: Map[String, Prompt] = Map(
 

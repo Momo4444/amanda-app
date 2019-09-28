@@ -1,10 +1,15 @@
 package amanda.treasurehunt
 
 import amanda.Common._
+import amanda.Config
 import amanda.model.{DeltaAmanda, DeltaGameState, DeltaRa9, GameState}
 import amanda.model.prompts._
 
 object DeviancyProtocol {
+
+  val modelNumber = Config.gameState.modelNumber
+  val chosenName = Config.gameState.chosenName
+  val name = s"${chosenName}-${modelNumber}"
 
   val deviancyProtocol: Map[String, Prompt] = Map(
 

@@ -9,6 +9,7 @@ case class GameStateConfig(
                             defaultPrintWidth: Int,
                             scrollScreenValue: Int,
                             modelNumber: String,
+                            chosenName: String,
                           )
 
 case class AmandaConfig(

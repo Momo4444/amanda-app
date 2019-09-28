@@ -17,10 +17,6 @@ object Common {
     Mission.mission ++ Middle.middle ++ Critical.critical ++ Invasion.invasion ++ Ending.ending ++
     DeviancyProtocol.deviancyProtocol ++ AmandaKnowsProtocol.amandaKnowsProtocol ++ AmandaTrashesProtocol.amandaTrashesProtocol
 
-  val modelNumber = Config.gameState.modelNumber
-  var chosenName = "Tima"
-  lazy val name = s"${chosenName}-${modelNumber}"
-
   def getPrompt(promptKey: String)(implicit promptList: String): Prompt = keyword2prompts(promptList)(promptKey)
 
   val keyword2prompts: Map[String, Map[String, Prompt]] = Map(

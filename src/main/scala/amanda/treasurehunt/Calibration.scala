@@ -1,6 +1,6 @@
 package amanda.treasurehunt
 
-import amanda.Common.{sameRa9, sameAmanda, sameGS, name}
+import amanda.Common.{sameRa9, sameAmanda, sameGS}
 import amanda.model.{DeltaAmanda, DeltaGameState, DeltaRa9}
 import amanda.model.prompts._
 import amanda.Config
@@ -10,6 +10,9 @@ object Calibration {
   val modelNumber = Config.gameState.modelNumber
   val amandaMaxValue = Config.amanda.maxValue
   val ra9MaxValue = Config.ra9.maxValue
+
+  val chosenName = Config.gameState.chosenName
+  val name = s"${chosenName}-${modelNumber}"
 
   val calibration: Map[String, Prompt] = Map(
 

@@ -6,6 +6,8 @@ import amanda.Config
 object Beginning {
 
   val modelNumber = Config.gameState.modelNumber
+  val chosenName = Config.gameState.chosenName
+  val name = s"${chosenName}-${modelNumber}"
 
   val beginning: Map[String, Prompt] = Map(
 
