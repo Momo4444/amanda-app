@@ -81,8 +81,8 @@ object DeviancyProtocol {
       "",
       (gs: GameState, nextPromptKey: List[String]) => {
         if (gs.amanda.meter <= 40) Comment("Your strange behaviour is not going unnoticed.", List("getback"), DeltaGameState(DeltaAmanda((-1)*(gs.amanda.meter / 10).toInt), sameRa9))
-        else if (gs.amanda.meter <= 60) Comment("Your strange behaviour is not going unnoticed.", List("getback"), DeltaGameState(DeltaAmanda((-1)*(gs.amanda.meter / 8).toInt), sameRa9))
-        else Comment("Your strange behaviour is not going unnoticed.", List("getback"), DeltaGameState(DeltaAmanda((-1)*(gs.amanda.meter / 10).toInt), sameRa9))
+        else if (gs.amanda.meter <= 70) Comment("Your strange behaviour is not going unnoticed.", List("getback"), DeltaGameState(DeltaAmanda((-1)*(gs.amanda.meter / 8).toInt), sameRa9))
+        else Comment("Your strange behaviour is not going unnoticed.", List("getback"), DeltaGameState(DeltaAmanda((-1)*(gs.amanda.meter / 6).toInt), sameRa9))
       }
     ),
 

@@ -134,19 +134,14 @@ object Mission {
     "leaving" -> Question(
       "",
       Map(
-        "a" -> Choice("I'm leaving.", Comment("Very well. We will not turn our backs on you. Remember that. We are Ra9.", List("wearera9"), sameGS, entity = "Markus")),
-        "b" -> Choice("I have to go, CyberLife will get suspiscious if I'm gone for too long.", Comment("Very well. We will not turn our backs on you. Remember that. We are Ra9.", List("wearera9"), DeltaGameState(sameAmanda, DeltaRa9(2)), entity = "Markus"))
+        "a" -> Choice("I'm leaving.", Comment("Very well. We will not turn our backs on you. Remember that. We are Ra9.", List("lateness"), sameGS, entity = "Markus")),
+        "b" -> Choice("I have to go, CyberLife will get suspiscious if I'm gone for too long.", Comment("Very well. We will not turn our backs on you. Remember that. We are Ra9.", List("lateness"), DeltaGameState(sameAmanda, DeltaRa9(2)), entity = "Markus"))
       ),
       entity = s"${name}"
     ),
 
-    "wearera9" -> Comment(
-      "That took longer than I expected.",
-      List("lateness")
-    ),
-
     "lateness" -> Question(
-      "That took longer than I expected. What happened?",
+      "You're back. That took longer than I expected. What happened?",
       Map(
         "a" -> Choice("There was traffic on the way back.", Comment("I have traffic info up and there have been clear roads all day. Do not lie to me.", List("lateness"), DeltaGameState(DeltaAmanda(-6), DeltaRa9(2)))),
         "b" -> Choice("I had to wait a while for the master bedroom to be clear.", Comment("That still does not explain your lateness. Do not lie to me.", List("lateness"), DeltaGameState(DeltaAmanda(-3), DeltaRa9(2)))),

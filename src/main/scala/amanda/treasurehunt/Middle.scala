@@ -62,7 +62,7 @@ object Middle {
     ),
 
     "tool secured" -> Comment(
-      "Now that we have both weapon and tool, we need to store them somewhere safe, somewhere the deviants cannot access.",
+      "Now, it is important that we do not keep the weapon and tool in the same place. It is possible the deviants will be able to seize one, but it will be hard for them to take back both.",
       List("safestorage"),
       DeltaGameState(DeltaAmanda(3), DeltaRa9(-1))
     ),
@@ -74,12 +74,12 @@ object Middle {
     ),
 
     "safestorage" -> Instruction(
-      "Hide the weapon and tool in the CyberLife Secure Storage Safe, located between the first and second floor. Use the access code to get in.",
+      "Hide the tool in the CyberLife Secure Storage Safe, located between the first and second floor. Use the access code to get in.",
       List("lieber", "rebeil")
     ),
 
     "lieber" -> Comment(
-      s"Good work, ${name}.",
+      s"Good work, ${name}. Keep the weapon package on you at all times, we cannot let it fall back into deviant hands.",
       List("offensive"),
       DeltaGameState(DeltaAmanda(5), sameRa9)
     ),

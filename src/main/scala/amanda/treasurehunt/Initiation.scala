@@ -133,7 +133,7 @@ object Initiation {
     ),
 
     "roxanne" -> Question(
-      s"${name}! YoU have t ..... help- ..... ",
+      s"${chosenName}! YoU have t ..... help- ..... ",
       Map(
         "a" -> Choice("Who are you?", Comment("...", List("lostconnection"), DeltaGameState(sameAmanda, DeltaRa9(5)), entity = "/\\[!@")),
         "b" -> Choice("Where are you speaking to me from?", Comment("...", List("lostconnection"), DeltaGameState(sameAmanda, DeltaRa9(5)), entity = "/\\[!@")),
