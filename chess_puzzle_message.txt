@@ -1,0 +1,7 @@
+To solve this puzzle, reminisce to the door that leads from the Raccoon Police Department basement to the Sewage Treatment Facility.
+
+Those that do not belong, must be eradicated. More precisely, they must eradicate each other.
+
+The answer, is in the golden move. There are two possibilities. Only one is required.
+
+(the answer should be in the format: "king to a1")
