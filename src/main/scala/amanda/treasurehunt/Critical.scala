@@ -176,9 +176,24 @@ object Critical {
       )
     ),
 
-    "runningreport" -> Comment(
-      "We have also learnt that many of the deviants have started running every day. We can use this information to our advantage." +
-        " We can reverse-corrupt some of them into following orders again.",
+    "runningreport" -> Instruction(
+      "You seem to have torn your android uniform on a tree in that foul place. Go and stitch it back up. We cannot have you looking like a vagabond.",
+      List("sancho", "ohcnas"),
+    ),
+
+    "sancho" -> Comment(
+      "Much better.",
+      List("runningreportreal")
+    ),
+
+    "ohcnas" -> Comment(
+      "Much better.",
+      List("runningreportreal")
+    ),
+
+    "runningreportreal" -> Comment(
+      "Thanks to some of the information you gathered, we have learnt that many of the deviants have started running every day. We can use this knowledge to our advantage." +
+        " We will reverse-corrupt some of them into following orders again.",
       List("everyday")
     ),
 

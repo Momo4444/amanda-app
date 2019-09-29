@@ -199,7 +199,23 @@ object Mission {
       )
     ),
 
-    "cyberintel" -> Comment(
+    "cyberintel" -> Instruction(
+      "We need to analyse the data from our historical actions, and learn from our past mistakes. The failure we saw in Detroit must not be replicated.",
+      List("quantic dream")
+    ),
+
+    "quantic dream" -> Instruction(
+      "Good, now upload the analysis to our big data storage. Currently we just have a list of premier league match outcomes...",
+      List("you will never walk alone")
+    ),
+
+    "you will never walk alone" -> Comment(
+      "Well done. That should be fruitful to future decision making.",
+      List("cyberintelreal"),
+      DeltaGameState(DeltaAmanda(3), sameRa9)
+    ),
+
+    "cyberintelreal" -> Comment(
       "I have just received some intel, from the bug you placed.",
       List("middle")
     ),

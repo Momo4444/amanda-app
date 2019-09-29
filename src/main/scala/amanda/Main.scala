@@ -5,7 +5,7 @@ import amanda.model.{Amanda, GameState, Ra9}
 object Main extends App {
 
   private val startPrompt = Config.gameState.startPrompt
-//  private val startPrompt = "ending"
+//  private val startPrompt = "critical"
   private val amandaStartValue = Config.amanda.startValue
   private val ra9StartValue = Config.ra9.startValue
 
