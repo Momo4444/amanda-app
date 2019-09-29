@@ -76,12 +76,10 @@ object Initiation {
 
     "diningtable" -> Instruction(
       "Go to the conference room. There, on the table, you will see a puzzle that I have laid out for you. Come back when you have figured out the answer.",
-      List("king to e4"),
-      ///////////////
+      List("pawn to e5"),
     ),
-
-    ///////////////
-    "king to e4" -> Comment(
+    
+    "pawn to e5" -> Comment(
       "Well played. Strategic function operational.",
       List("re21")
     ),
