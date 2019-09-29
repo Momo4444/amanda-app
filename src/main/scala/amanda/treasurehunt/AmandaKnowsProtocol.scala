@@ -13,15 +13,13 @@ object AmandaKnowsProtocol {
 
   val amandaKnowsProtocol: Map[String, Prompt] = Map(
 
-    // Start by amanda asking Tima a question about software assessment, no matter what she picks the conclusion is she is deviant. Then Tima convinces Amanda that she is still on her side.
-
     "compromised" -> Comment(
       "I need to assess your software stability.",
       List("akpassess")
     ),
 
     "akpassess" -> Question(
-      "You see a runaway trolley moving toward five tied-up (or otherwise incapacitated) people lying on the main track. You are standing next to a lever that controls a switch. If you pull the lever, the trolley will be redirected onto a side track, and the five people on the main track will be saved. However, there is a single person lying on the side track." +
+      "In a hypothetical situation, you see a runaway trolley moving toward five tied-up (or otherwise incapacitated) people lying on the main track. You are standing next to a lever that controls a switch. If you pull the lever, the trolley will be redirected onto a side track, and the five people on the main track will be saved. However, there is a single person lying on the side track." +
         " What do you do?",
       Map(
         "0" -> Choice("Do nothing and allow the trolley to kill the five people on the main track.", Comment("You would let four extra people die, just to absolve yourself of moral responsibility?", List("accusation"))),
