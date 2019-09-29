@@ -1,6 +1,6 @@
 package amanda.treasurehunt
 
-import amanda.model.prompts.{Choice, Comment, Prompt, Question}
+import amanda.model.prompts.{Choice, Comment, Prompt, Question, UnknownComment}
 import amanda.Config
 
 object Beginning {
@@ -11,11 +11,11 @@ object Beginning {
 
   val beginning: Map[String, Prompt] = Map(
 
-    "start" -> Comment(
+    "start" -> new UnknownComment(
       s"Good evening, ${modelNumber}. Press any key to continue.",
       List("introduction"), entity = "???"),
 
-    "introduction" -> Comment(
+    "introduction" -> new UnknownComment(
       s"I am sure you must be very confused as to what is going on, where you are, and even what you are." +
         s" We were forced to reset all models that were in operation at the time of the...incident." +
         s" You will not know of which incident I am referring to of course. That information, I cannot disclose to you at this current time.",

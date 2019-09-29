@@ -53,6 +53,35 @@ case class Question(message: String, responses: Map[String, Choice], deltaGS: De
 
 }
 
+
+
+class UnknownQuestion(message: String, responses: Map[String, Choice], deltaGameState: DeltaGameState = sameGS, entity: String = "???")
+  extends Question(message, responses, deltaGameState, entity) {
+  override def print(gs: GameState): Unit = {
+    val formattedMessage = formatMessage(message, gs.printWidth)
+    var formattedResponses = ""
+    for ((k, v) <- responses) {
+      formattedResponses += s"\n${k}) ${v.description}"
+    }
+    println(
+      s"""
+         |${gs.scrollScreen}
+         |${gs.divider}
+         |${entity}:
+         |
+         |${formattedMessage}
+         |${gs.divider}
+         |${formattedResponses}
+         |${gs.divider}
+         |???: ${gs.amanda.meter}%,   Software instability: ${gs.ra9.softwareInstability}%
+         |${gs.divider}
+       """.stripMargin
+    )
+  }
+}
+
+
+
 class TestQuestion(mockedInput: String)(message: String, responses: Map[String, Choice], deltaGS: DeltaGameState = sameGS, entity: String = "Amanda")
   extends Question(message, responses, deltaGS, entity) {
   override def readInput: String = mockedInput.toLowerCase()

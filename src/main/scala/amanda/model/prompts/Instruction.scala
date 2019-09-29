@@ -45,6 +45,28 @@ case class Instruction(message: String, keywords: List[String], deltaGS: DeltaGa
 
 }
 
+
+
+class UnknownInstruction(message: String, keywords: List[String], deltaGameState: DeltaGameState = sameGS, entity: String = "???")
+  extends Instruction(message, keywords, deltaGameState, entity) {
+  override def print(gs: GameState): Unit = {
+    val formattedMessage = formatMessage(message, gs.printWidth)
+    println(
+      s"""
+         |${gs.scrollScreen}
+         |${gs.divider}
+         |${entity}:
+         |
+         |${formattedMessage}
+         |${gs.divider}
+         |???: ${gs.amanda.meter}%,   Software instability: ${gs.ra9.softwareInstability}%
+         |${gs.divider}
+      """.stripMargin)
+  }
+}
+
+
+
 class TestInstruction(mockedInput: String)(message: String, keywords: List[String], deltaGameState: DeltaGameState = sameGS, entity: String = "Amanda")
   extends Instruction(message, keywords, deltaGameState, entity) {
   override def readInput: String = mockedInput.toLowerCase()

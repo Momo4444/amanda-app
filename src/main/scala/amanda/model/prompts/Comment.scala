@@ -43,6 +43,28 @@ case class Comment(message: String, keywords: List[String], deltaGS: DeltaGameSt
 
 }
 
+
+
+class UnknownComment(message: String, keywords: List[String], deltaGameState: DeltaGameState = sameGS, entity: String = "???")
+  extends Comment(message, keywords, deltaGameState, entity) {
+  override def print(gs: GameState): Unit = {
+    val formattedMessage = formatMessage(message, gs.printWidth)
+    println(
+      s"""
+         |${gs.scrollScreen}
+         |${gs.divider}
+         |${entity}:
+         |
+         |${formattedMessage}
+         |${gs.divider}
+         |???: ${gs.amanda.meter}%,   Software instability: ${gs.ra9.softwareInstability}%
+         |${gs.divider}
+      """.stripMargin)
+  }
+}
+
+
+
 class TestComment(message: String, keywords: List[String], deltaGS: DeltaGameState = sameGS, entity: String = "Amanda")
   extends Comment(message, keywords, deltaGS, entity) {
   override def readInput: String = ""
