@@ -84,7 +84,7 @@ object Mission {
     ),
 
     "pursuing" -> Comment(
-      "I am currently pursuing intel on a cyber weapon that, if wielded correctly, will corrupt the entire deviant network.",
+      "I am currently pursuing intel on a cyber weapon that, if wielded correctly, will corrupt a deviant and destroy it.",
       List("infiltration")
     ),
 

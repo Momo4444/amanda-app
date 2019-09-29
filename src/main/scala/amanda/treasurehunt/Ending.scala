@@ -45,6 +45,7 @@ object Ending {
     "namuh emoceb" -> Comment(
       "Do it now! Turn the weapon against CyberLife!",
       List("amandaargument"),
+      entity = "Markus"
     ),
 
     "amandaargument" -> Comment(
